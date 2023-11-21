@@ -12,6 +12,8 @@ const AuthForm = () => {
     password: '',
     password2: '',
   });
+
+  
   const [errors, setErrors] = useState({});
 
   const changeAuthMode = () => {
