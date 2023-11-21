@@ -1,0 +1,33 @@
+/* HeaderBar.css */
+
+header {
+    display: flex;
+    justify-content: flex-start; /* Change to flex-start */
+    align-items: center;
+    margin-right: 85px;
+    padding: 15px;
+  }
+  
+  header div {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    padding: 10px;
+  }
+  
+  h2 {
+    margin-left: 10px;
+  }
+  
+  img {
+    max-width: 80px;
+    height: 80px;
+    border-radius: 1000px;
+    margin-right: 10px;
+  }
+  #opti{
+    color: rgb(47, 95, 255);
+    text-decoration: underline;
+
+  }
+  
