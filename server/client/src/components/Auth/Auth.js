@@ -1,10 +1,8 @@
-// AuthForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const AuthForm = () => {
-  const navigate = useNavigate();
+
   const [authMode, setAuthMode] = useState('signin');
   const [formData, setFormData] = useState({
     name: '',
@@ -12,9 +10,12 @@ const AuthForm = () => {
     password: '',
     password2: '',
   });
-
-  
   const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState({
+    show: false,
+    type: 'success',
+    message: '',
+  });
 
   const changeAuthMode = () => {
     setAuthMode((prevMode) => (prevMode === 'signin' ? 'signup' : 'signin'));
@@ -24,6 +25,13 @@ const AuthForm = () => {
       email: '',
       password: '',
       password2: '',
+    });
+
+    // Hide the alert when switching modes
+    setAlert({
+      show: false,
+      type: 'success',
+      message: '',
     });
   };
 
@@ -36,24 +44,66 @@ const AuthForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const apiUrl = `http://localhost:5000/api/users${formData.endpoint}`;
       const response = await axios.post(apiUrl, formData);
       console.log(`${authMode} successful!`, response.data);
-
-
-      navigate('/main');
-
+  
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        password2: '',
+      });
+  
+      // Set the success alert only in signup mode
+      if (authMode === 'signup') {
+        setAlert({
+          show: true,
+          type: 'success',
+          message: 'Registration successful!',
+        });
+  
+        // Hide the alert after 5 seconds (adjust as needed)
+        setTimeout(() => {
+          setAlert({
+            show: false,
+            type: 'success',
+            message: '',
+          });
+        }, 3000);
+      }
+  
+      // Switch back to signin mode after successful signup
+      if (authMode === 'signup') {
+        setAuthMode('signin');
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         console.log('Server validation errors:', error.response.data);
         setErrors(error.response.data);
+  
+        setAlert({
+          show: true,
+          type: 'error',
+          message: 'Registration failed. Please check your inputs.',
+        });
+  
+        // Hide the alert after 5 seconds (adjust as needed)
+        setTimeout(() => {
+          setAlert({
+            show: false,
+            type: 'error',
+            message: '',
+          });
+        }, 3000);
       } else {
         console.error('Authentication error:', error.message);
       }
     }
   };
+  
 
   return (
     <div className="Auth-form-container">
@@ -62,6 +112,7 @@ const AuthForm = () => {
           <h3 className="Auth-form-title">
             {authMode === 'signin' ? 'Sign In' : 'Sign Up'}
           </h3>
+
           <div className="text-center">
             {authMode === 'signin' ? (
               <span>
@@ -144,6 +195,12 @@ const AuthForm = () => {
               {authMode === 'signin' ? 'Sign In' : 'Sign Up'}
             </button>
           </div>
+
+          {alert.show && (
+            <div className={`alert alert-${alert.type} mt-3`} role="alert">
+              {alert.message}
+            </div>
+          )}
         </div>
       </form>
     </div>
