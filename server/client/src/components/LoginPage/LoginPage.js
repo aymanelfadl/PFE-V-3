@@ -1,5 +1,5 @@
-import AuthForm from "../Auth/Auth";
-import HeaderBar from "../header/HeaderBar";
+import AuthForm from "./Auth/Auth";
+import HeaderBar from "./header/HeaderBar";
 import "./LoginPage.css"
 
 export default function LoginPage(){

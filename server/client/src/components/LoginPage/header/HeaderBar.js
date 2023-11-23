@@ -4,9 +4,9 @@ import './HeaderBar.css'
 function HeaderBar() {
   return (
         <header>
+          
           <div>
-            <img src="/logo.png" alt='Logo de OptiStocke' ></img> 
-            <h1><span id='opti'><b>OpTi</b></span>-Stocke</h1> 
+            <img src="/logo.png" alt='Logo de OptiStocke' ></img>
           </div>
         </header>
   );
