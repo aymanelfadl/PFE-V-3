@@ -15,7 +15,6 @@ function UpdateProductQuantityForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Pass the form data to the parent component for submission
     onSubmit(formData);
   };
 
