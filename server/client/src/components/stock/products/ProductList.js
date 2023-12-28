@@ -1,14 +1,29 @@
-// ProductList.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductDetails from './ProductDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ProductList = ({ products }) => {
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/products/productlist');
+        const data = await response.json();
+        setProducts(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
   const handleProductClick = (product) => {
-    setSelectedProduct(product);
+    setSelectedProduct((prevSelectedProduct) =>
+      prevSelectedProduct === product ? null : product
+    );
   };
 
   const filteredProducts = products.filter((product) =>
@@ -38,7 +53,15 @@ const ProductList = ({ products }) => {
                 onClick={() => handleProductClick(product)}
               >
                 {product.name}
-                <span className="badge bg-primary rounded-pill">
+                <span
+                  className={`badge bg-primary rounded-pill ${
+                    product.quantityInStock === 0
+                      ? 'bg-danger'
+                      : product.quantityInStock < 5
+                      ? 'bg-warning'
+                      : ''
+                  }`}
+                >
                   Quantity: {product.quantityInStock}
                 </span>
               </li>

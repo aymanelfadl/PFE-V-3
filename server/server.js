@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/Users");
+const products = require("./routes/api/Products");
 
 const app = express();
 
 const cors = require('cors');
 app.use(cors());
+
+
 
 
 // Bodyparser middleware
@@ -37,6 +40,8 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/api/users", users);
+
+app.use("/api/products", products);
 
 
 const port = process.env.PORT || 5000;

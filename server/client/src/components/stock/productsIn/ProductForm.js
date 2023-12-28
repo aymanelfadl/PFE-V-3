@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-function NewProductForm({ onSubmit }) {
+function NewProductForm() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -11,20 +11,46 @@ function NewProductForm({ onSubmit }) {
     brand: '',
     supplierName: '',
     supplierContactInfo: '',
-    costPrice: '',
-    sellingPrice: '',
-    quantityInStock: '',
+    costPrice: '', 
+    sellingPrice:'',
+    quantityInStock: '', 
   });
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Pass the form data to the parent component for submission
-    onSubmit(formData);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/products/newproduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      console.log('New Product Response:', data);
+
+      setFormData({
+        name: '',
+        description: '',
+        category: '',
+        brand: '',
+        supplierName: '',
+        supplierContactInfo: '',
+        costPrice: 0,
+        sellingPrice: 0,
+        quantityInStock: 0,
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
