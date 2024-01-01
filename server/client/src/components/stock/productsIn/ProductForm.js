@@ -1,7 +1,7 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 function NewProductForm() {
   const [formData, setFormData] = useState({
@@ -11,31 +11,51 @@ function NewProductForm() {
     brand: '',
     supplierName: '',
     supplierContactInfo: '',
-    costPrice: '', 
-    sellingPrice:'',
-    quantityInStock: '', 
+    costPrice: '',
+    sellingPrice: '',
+    quantityInStock: '',
   });
-  
+
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+  const [suppliersInfo, setSuppliersInfo] = useState([]);
+
+  const [validationErrors, setValidationErrors] = useState({});
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/products/productlist');
+        const FromServer = response.data; 
+        setCategories(FromServer.map(Obj => Obj.category));
+        setBrands(FromServer.map(Obj => Obj.brand));
+        setSuppliers(FromServer.map(Obj => Obj.supplierName));
+        setSuppliersInfo(FromServer.map(Obj => Obj.supplierContactInfo));
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setValidationErrors({ ...validationErrors, [name]: '' });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/products/newproduct', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:5000/api/products/newproduct', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      console.log('New Product Response:', data);
+      console.log('New Product Response:', response.data);
 
       setFormData({
         name: '',
@@ -44,12 +64,17 @@ function NewProductForm() {
         brand: '',
         supplierName: '',
         supplierContactInfo: '',
-        costPrice: 0,
-        sellingPrice: 0,
-        quantityInStock: 0,
+        costPrice: '',
+        sellingPrice: '',
+        quantityInStock: '',
       });
+      setValidationErrors({});
     } catch (error) {
-      console.error('Error:', error);
+      if (error.response && error.response.status === 400 && error.response.data.validationErrors) {
+        setValidationErrors(error.response.data.validationErrors);
+      } else {
+        console.error('Error:', error);
+      }
     }
   };
 
@@ -59,8 +84,8 @@ function NewProductForm() {
         <FontAwesomeIcon icon={faPlus} className="mr-2" />
         Add New Product
       </h2>
-      <form onSubmit={handleSubmit}>
-      <div className="mb-3">
+      <form onSubmit={handleSubmit} method="POST">
+        <div className="mb-3">
           <label className="form-label">Name:</label>
           <input
             type="text"
@@ -70,6 +95,7 @@ function NewProductForm() {
             onChange={handleChange}
             required
           />
+          {validationErrors.name && <div className="text-danger">{validationErrors.name}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Description:</label>
@@ -80,6 +106,7 @@ function NewProductForm() {
             onChange={handleChange}
             required
           />
+          {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Category:</label>
@@ -89,8 +116,13 @@ function NewProductForm() {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            required
+            list="categoryList"
           />
+          <datalist id="categoryList">
+            {categories.map((category) => (
+              <option key={category} value={category} />
+            ))}
+          </datalist>
         </div>
         <div className="mb-3">
           <label className="form-label">Brand:</label>
@@ -100,8 +132,14 @@ function NewProductForm() {
             name="brand"
             value={formData.brand}
             onChange={handleChange}
-            required
+            list="brandList"
           />
+          <datalist id="brandList">
+            {brands.map((brand) => (
+              <option key={brand} value={brand} />
+            ))}
+          </datalist>
+          {validationErrors.brand && <div className="text-danger">{validationErrors.brand}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Supplier Name:</label>
@@ -111,8 +149,14 @@ function NewProductForm() {
             name="supplierName"
             value={formData.supplierName}
             onChange={handleChange}
-            required
+            list="supplierList"
           />
+          <datalist id="supplierList">
+            {suppliers.map((supplierName) => (
+              <option key={supplierName} value={supplierName} />
+            ))}
+          </datalist>
+          {validationErrors.supplierName && <div className="text-danger">{validationErrors.supplierName}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Supplier Contact Info:</label>
@@ -122,8 +166,16 @@ function NewProductForm() {
             name="supplierContactInfo"
             value={formData.supplierContactInfo}
             onChange={handleChange}
-            required
+            list="supplierInfoList"
           />
+          <datalist id="supplierInfoList">
+            {suppliersInfo.map((supplierInfo) => (
+              <option key={supplierInfo} value={supplierInfo} />
+            ))}
+          </datalist>
+          {validationErrors.supplierContactInfo && (
+            <div className="text-danger">{validationErrors.supplierContactInfo}</div>
+          )}
         </div>
         <div className="mb-3">
           <label className="form-label">Cost Price:</label>
@@ -135,6 +187,7 @@ function NewProductForm() {
             onChange={handleChange}
             required
           />
+          {validationErrors.costPrice && <div className="text-danger">{validationErrors.costPrice}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Selling Price:</label>
@@ -146,6 +199,7 @@ function NewProductForm() {
             onChange={handleChange}
             required
           />
+          {validationErrors.sellingPrice && <div className="text-danger">{validationErrors.sellingPrice}</div>}
         </div>
         <div className="mb-3">
           <label className="form-label">Quantity in Stock:</label>
@@ -157,6 +211,9 @@ function NewProductForm() {
             onChange={handleChange}
             required
           />
+          {validationErrors.quantityInStock && (
+            <div className="text-danger">{validationErrors.quantityInStock}</div>
+          )}
         </div>
         <div className="mb-3">
           <button type="submit" className="btn btn-primary">
@@ -170,4 +227,3 @@ function NewProductForm() {
 }
 
 export default NewProductForm;
-

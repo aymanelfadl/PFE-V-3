@@ -12,11 +12,6 @@ const AuthForm = () => {
     password2: '',
   });
   const [errors, setErrors] = useState({});
-  const [alert, setAlert] = useState({
-    show: false,
-    type: 'success',
-    message: '',
-  });
 
   const changeAuthMode = () => {
     setAuthMode((prevMode) => (prevMode === 'signin' ? 'signup' : 'signin'));
@@ -26,13 +21,6 @@ const AuthForm = () => {
       email: '',
       password: '',
       password2: '',
-    });
-
-    // Hide the alert when switching modes
-    setAlert({
-      show: false,
-      type: 'success',
-      message: '',
     });
   };
 
@@ -58,25 +46,6 @@ const AuthForm = () => {
         password2: '',
       });
   
-      // Set the success alert only in signup mode
-      if (authMode === 'signup') {
-        setAlert({
-          show: true,
-          type: 'success',
-          message: 'Registration successful!',
-        });
-  
-        // Hide the alert after 5 seconds (adjust as needed)
-        setTimeout(() => {
-          setAlert({
-            show: false,
-            type: 'success',
-            message: '',
-          });
-        }, 3000);
-      }
-  
-      // Switch back to signin mode after successful signup
       if (authMode === 'signup') {
         setAuthMode('signin');
       }
@@ -84,21 +53,6 @@ const AuthForm = () => {
       if (error.response && error.response.data) {
         console.log('Server validation errors:', error.response.data);
         setErrors(error.response.data);
-  
-        setAlert({
-          show: true,
-          type: 'error',
-          message: 'Registration failed. Please check your inputs.',
-        });
-  
-        // Hide the alert after 5 seconds (adjust as needed)
-        setTimeout(() => {
-          setAlert({
-            show: false,
-            type: 'error',
-            message: '',
-          });
-        }, 3000);
       } else {
         console.error('Authentication error:', error.message);
       }

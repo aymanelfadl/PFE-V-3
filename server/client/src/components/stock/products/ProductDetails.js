@@ -1,9 +1,10 @@
 // ProductDetails.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTag, faCubes, faMoneyBill, faMoneyCheck, faMoneyBillAlt, faCopyright } from '@fortawesome/free-solid-svg-icons';
+import { faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const ProductDetails = ({ product }) => {
+  console.log(product);
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Product Details</h2>
@@ -13,16 +14,19 @@ const ProductDetails = ({ product }) => {
             <FontAwesomeIcon icon={faTag} /> <strong>Name:</strong> {product.name}
           </p>
           <p className="card-text">
-            <FontAwesomeIcon icon={faCopyright} /> <strong>Category:</strong> {product.category}
+          <FontAwesomeIcon icon={faLayerGroup} /> <strong>Category:</strong> {product.category}
           </p>
           <p className="card-text">
-            <FontAwesomeIcon icon={faMoneyCheck} /> <strong>Brand:</strong> {product.brand}
+            <FontAwesomeIcon icon={faBuilding} /> <strong>Brand:</strong> {product.brand}
           </p>
           <p className="card-text">
-            <FontAwesomeIcon icon={faMoneyBillAlt} /> <strong>Supplier:</strong> {product.supplier}
+            <FontAwesomeIcon icon={faUser} /> <strong>Supplier Name:</strong> {product.supplierName}
           </p>
           <p className="card-text">
-            <FontAwesomeIcon icon={faMoneyBill} /> <strong>Cost Price:</strong> {product.costPrice}
+            <FontAwesomeIcon icon={faInfoCircle} /> <strong>Supplier Infos:</strong> {product.supplierContactInfo}
+          </p>
+          <p className="card-text">
+            <FontAwesomeIcon icon={faMoneyBillAlt} /> <strong>Cost Price:</strong> {product.costPrice}
           </p>
           <p className="card-text">
             <FontAwesomeIcon icon={faMoneyBill} /> <strong>Selling Price:</strong> {product.sellingPrice}

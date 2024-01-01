@@ -48,10 +48,10 @@ const ProductList = () => {
           <ul className="list-group">
             {filteredProducts.map((product) => (
               <li
-                key={product.id}
+                key={product._id}  
                 className="list-group-item d-flex justify-content-between align-items-center"
                 onClick={() => handleProductClick(product)}
-              >
+              > 
                 {product.name}
                 <span
                   className={`badge bg-primary rounded-pill ${

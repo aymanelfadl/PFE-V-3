@@ -3,6 +3,7 @@ const router = express.Router();
 
 
 const Product = require("../../models/Product");
+const validateNewProductInput = require("../../validation/productValidation");
 
 router.get("/productlist", (req, res) => {
   Product.find()
@@ -11,18 +12,21 @@ router.get("/productlist", (req, res) => {
 });
 
 router.post("/newproduct", (req, res) => {
-    console.log("Request Body:", req.body); // Log the request body
+  const { errors, isValid } = validateNewProductInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ error: 'Validation Error', validationErrors: errors });
+  }
+  const newProduct = new Product(req.body);
   
-    const newProduct = new Product(req.body);
-  
-    newProduct
-      .save()
-      .then((product) => res.json(product))
-      .catch((err) => {
-        console.error(err);
-        res.status(400).json({ error: "Bad Request" });
-      });
-  });
-  
+  newProduct
+    .save()
+    .then((product) => res.json(product))
+    .catch((err) => {
+      console.error(err);
+      res.status(400).json({ error: 'Bad Request' });
+    });
+});
+
 
 module.exports = router;

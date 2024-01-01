@@ -18,13 +18,13 @@ const ProductSchema = new Schema({
       type: String,
       required: true
     },
-    suppliername: {
-            type: String,
-            required: true
+    supplierName: {
+      type: String,
+      required: true
         },
-    suppliercontactInfo: {
-            type: String,
-            required: true
+    supplierContactInfo: {
+      type: String,
+      required: true
     }, 
     costPrice: {
         type: Number,
