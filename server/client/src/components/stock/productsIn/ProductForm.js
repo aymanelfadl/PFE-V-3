@@ -79,7 +79,7 @@ function NewProductForm() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-sm">
       <h2>
         <FontAwesomeIcon icon={faPlus} className="mr-2" />
         Add New Product

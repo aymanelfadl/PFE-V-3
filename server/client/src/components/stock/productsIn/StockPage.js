@@ -12,9 +12,15 @@ function StockPage() {
   };
 
   return (
-    <div>
-      <NewProductForm onSubmit={handleNewProductSubmit} />
-      <UpdateProductQuantityForm onSubmit={handleUpdateQuantitySubmit} />
+    <div class="container">
+      <div class="row">
+        <div className='col-4'>
+        <NewProductForm onSubmit={handleNewProductSubmit} />
+        </div>
+        <div className='col-6'>
+        <UpdateProductQuantityForm onSubmit={handleUpdateQuantitySubmit} />
+        </div>
+      </div>
     </div>
   );
 }
