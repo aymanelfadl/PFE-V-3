@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "./Auth.css"
 
-const AuthForm = () => {
+const AuthForm = ({ setLoggedIn }) => {
 
   const [authMode, setAuthMode] = useState('signin');
   const [formData, setFormData] = useState({
@@ -38,7 +38,9 @@ const AuthForm = () => {
       const apiUrl = `http://localhost:5000/api/users${formData.endpoint}`;
       const response = await axios.post(apiUrl, formData);
       console.log(`${authMode} successful!`, response.data);
-  
+
+      setLoggedIn(true);  
+      
       setFormData({
         name: '',
         email: '',
@@ -110,7 +112,7 @@ const AuthForm = () => {
               className="form-control mt-1"
               placeholder="Enter email"
             />
-            {errors.email && <div className="text-danger">{errors.email}</div>}
+             {errors.email && (<div className="text-danger">{errors.email}</div>)}
           </div>
 
           <div className="form-group mt-3">
@@ -123,9 +125,7 @@ const AuthForm = () => {
               className="form-control mt-1"
               placeholder="Enter password"
             />
-            {errors.password && (
-              <div className="text-danger">{errors.password}</div>
-            )}
+            {errors.password && (<div className="text-danger">{errors.password}</div>)}
           </div>
 
           {authMode === 'signup' && (
@@ -150,12 +150,6 @@ const AuthForm = () => {
               {authMode === 'signin' ? 'Sign In' : 'Sign Up'}
             </button>
           </div>
-
-          {alert.show && (
-            <div className={`alert alert-${alert.type} mt-3`} role="alert">
-              {alert.message}
-            </div>
-          )}
         </div>
       </form>
     </div>

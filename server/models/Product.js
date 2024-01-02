@@ -37,6 +37,10 @@ const ProductSchema = new Schema({
     quantityInStock: {
         type: Number,
         required: true
+    },
+    date: {
+      type: Date,
+      default: Date.now
     }
 });
 

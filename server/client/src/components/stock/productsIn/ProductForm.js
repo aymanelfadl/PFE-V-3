@@ -79,13 +79,13 @@ function NewProductForm() {
   };
 
   return (
-    <div className="container-sm">
+    <div className="">
       <h2>
         <FontAwesomeIcon icon={faPlus} className="mr-2" />
         Add New Product
       </h2>
-      <form onSubmit={handleSubmit} method="POST">
-        <div className="mb-3">
+      <form onSubmit={handleSubmit} method="POST" className="row g-3">
+        <div className="col-md-6">
           <label className="form-label">Name:</label>
           <input
             type="text"
@@ -97,18 +97,7 @@ function NewProductForm() {
           />
           {validationErrors.name && <div className="text-danger">{validationErrors.name}</div>}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Description:</label>
-          <textarea
-            className="form-control"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-          {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
-        </div>
-        <div className="mb-3">
+        <div className="col-md-6">
           <label className="form-label">Category:</label>
           <input
             type="text"
@@ -129,6 +118,7 @@ function NewProductForm() {
           <input
             type="text"
             className="form-control"
+            placeholder="Brand..."
             name="brand"
             value={formData.brand}
             onChange={handleChange}
@@ -142,6 +132,17 @@ function NewProductForm() {
           {validationErrors.brand && <div className="text-danger">{validationErrors.brand}</div>}
         </div>
         <div className="mb-3">
+          <label className="form-label">Description:</label>
+          <textarea
+            className="form-control"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+          {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
+        </div>
+        <div className="col-md-6">
           <label className="form-label">Supplier Name:</label>
           <input
             type="text"
@@ -158,7 +159,7 @@ function NewProductForm() {
           </datalist>
           {validationErrors.supplierName && <div className="text-danger">{validationErrors.supplierName}</div>}
         </div>
-        <div className="mb-3">
+        <div className="col-md-6">
           <label className="form-label">Supplier Contact Info:</label>
           <input
             type="text"
@@ -177,7 +178,7 @@ function NewProductForm() {
             <div className="text-danger">{validationErrors.supplierContactInfo}</div>
           )}
         </div>
-        <div className="mb-3">
+        <div className="col-md-6">
           <label className="form-label">Cost Price:</label>
           <input
             type="number"
@@ -189,7 +190,7 @@ function NewProductForm() {
           />
           {validationErrors.costPrice && <div className="text-danger">{validationErrors.costPrice}</div>}
         </div>
-        <div className="mb-3">
+        <div className="col-md-6">
           <label className="form-label">Selling Price:</label>
           <input
             type="number"

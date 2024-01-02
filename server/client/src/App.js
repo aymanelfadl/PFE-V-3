@@ -1,21 +1,27 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
-import ProductList from './components/stock/products/ProductList';
 import StockPage from './components/stock/productsIn/StockPage';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
+import MainPage from './components/stock/products/MainPage';
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/main" element={<ProductList />} />
-        <Route path="/stock" element={<StockPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <LoginPage setLoggedIn={setLoggedIn} />} />
+          {isLoggedIn && (
+            <>
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/stock" element={<StockPage />} />
+            </>
+          )}
+        </Routes>
+      </div>
+    </Router>
   );
-}  
+}
 
 export default App;

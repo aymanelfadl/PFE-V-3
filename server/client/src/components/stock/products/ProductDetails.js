@@ -1,10 +1,9 @@
-// ProductDetails.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faInfoCircle,faClock } from '@fortawesome/free-solid-svg-icons';
 const ProductDetails = ({ product }) => {
-  console.log(product);
+  const entryDate = new Date(product.date);
+  const formattedDate = entryDate.toLocaleDateString();
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Product Details</h2>
@@ -33,6 +32,9 @@ const ProductDetails = ({ product }) => {
           </p>
           <p className="card-text">
             <FontAwesomeIcon icon={faCubes} /> <strong>Quantity in Stock:</strong> {product.quantityInStock}
+          </p>
+          <p className="card-text">
+           <FontAwesomeIcon icon={faClock} /> <strong>Entry Date:</strong> {formattedDate}
           </p>
         </div>
       </div>
