@@ -17,6 +17,7 @@ const Sidebar = () => {
 
   const LogOut = () => {
     localStorage.removeItem('authToken');
+    window.location.href = "/";
   };
   
   return (
@@ -48,7 +49,7 @@ const Sidebar = () => {
             <NavLink exact to="/convert" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="file-excel">Convert Excel File</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink to="/" onClick={LogOut} activeClassName="activeClicked">
+            <NavLink  onClick={LogOut} activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="door-open">Log Out</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
