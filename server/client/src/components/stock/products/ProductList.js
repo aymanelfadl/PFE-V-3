@@ -33,39 +33,46 @@ const ProductList = () => {
     <div className="container mt-4">
       <div className="row">
         <div className="col-md-6">
-          <h2>Product List</h2>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search for a product..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-4 ml-5 " style={{marginRight:'-275px', marginLeft:'275px'}}>
+            <div className="input-group">
+              <input type="search"
+                placeholder="What're you searching for?" 
+                aria-describedby="button-addon1" 
+                className="form-control border-0 bg-light"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}/>
+              <div className="input-group-append">
+                <button id="button-addon1" type="submit" className="btn btn-link text-primary"><i className="fa fa-search"></i></button>
+              </div>
+            </div>
           </div>
-
-          <ul className="list-group">
-            {filteredProducts.map((product) => (
-              <li
-                key={product._id}  
-                className="list-group-item d-flex justify-content-between align-items-center"
-                onClick={() => handleProductClick(product)}
-              > 
-                {product.name}
-                <span
-                  className={`badge bg-primary rounded-pill ${
-                    product.quantityInStock === 0
-                      ? 'bg-danger'
-                      : product.quantityInStock < 5
-                      ? 'bg-warning'
-                      : ''
-                  }`}
-                >
-                  Quantity: {product.quantityInStock}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <h3 style={{marginBottom:'12px'}}> Product List: </h3>
+          <ol className="list-group list-group-numbered">
+      {filteredProducts.map((product) => (
+        <li
+          key={product._id}  
+          className="list-group-item d-flex justify-content-between align-items-start"
+          onClick={() => handleProductClick(product)}
+        >
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">{product.name}</div>
+               <div style={{marginLeft:'8px',}}>{product.category}</div>
+          </div>
+          <span
+            className={`badge bg-primary rounded-pill ${
+              product.quantityInStock === 0
+                ? 'bg-danger'
+                : product.quantityInStock < 5
+                ? 'bg-warning'
+                : ''
+            }`}
+            style={{marginTop: '15px'}}
+          >
+            Quantity: {product.quantityInStock}
+          </span>
+        </li>
+      ))}
+    </ol>
         </div>
         <div className="col-md-6">
           {selectedProduct && <ProductDetails product={selectedProduct} />}
