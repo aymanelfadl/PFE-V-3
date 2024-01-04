@@ -8,13 +8,12 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
-import { useUser } from '../LoginPage/Auth/UserContext';
 
 
 const Sidebar = () => {
 
-  const { userFullName } = useUser();
 
+  const userName = localStorage.getItem('userName');
   const LogOut = () => {
     localStorage.removeItem('authToken');
     window.location.href = "/";
@@ -56,7 +55,7 @@ const Sidebar = () => {
         </CDBSidebarContent>
 
         <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div style={{ padding: '20px 5px' }}>{userFullName}</div>
+          <div style={{ padding: '20px 5px' }}>{userName}</div>
         </CDBSidebarFooter>
       </CDBSidebar>
     </div>
