@@ -86,6 +86,20 @@ const ProductList = () => {
     });
   };
 
+  const handleSelectAll = () => {
+    setSelectedProducts(filteredAndSortedProducts);
+  };
+
+  const handleDeleteSelected = () => {
+    // Implement the logic to delete selected products (e.g., send a request to the server)
+    // After deletion, you may want to refetch the updated list of products
+    console.log('Deleting selected products:', selectedProducts);
+    // For demonstration purposes, let's clear the selection after deletion
+    setSelectedProducts([]);
+    setCheckboxVisible(false);
+  };
+
+
   return (
     <div className="container mt-4">
       <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-4 ml-5 " style={{ marginRight: "250px", marginLeft: "250px" }}>
@@ -153,6 +167,16 @@ const ProductList = () => {
           </ol>
         </div>
         <div className="col-md-6" >
+        {checkboxVisible && (
+              <div>
+                <button className="btn btn-primary" onClick={handleSelectAll}>
+                  Select All
+                </button>
+                <button className="btn btn-danger ms-2" onClick={handleDeleteSelected}>
+                  Delete Selected
+                </button>
+              </div>
+            )}
           {selectedProduct && <ProductDetails product={selectedProduct} />}
           {selectedProduct && <h3 style={{ textAlign: "center" }}>Product Details</h3>}
         </div>
