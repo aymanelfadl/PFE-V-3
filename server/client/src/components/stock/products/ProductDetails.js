@@ -8,7 +8,7 @@ const ProductDetails = ({ product }) => {
   return (
     <div className="container mt-4">
       <div className="card">
-        <div className="card-body">
+        <div className="card-body" style={{padding:"28px"}}>
           <p className="card-text">
             <FontAwesomeIcon icon={faTag} /> <strong>Name:</strong> {product.name}
           </p>
