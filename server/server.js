@@ -40,7 +40,6 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/api/users", users);
-
 app.use("/api/products", products);
 
 

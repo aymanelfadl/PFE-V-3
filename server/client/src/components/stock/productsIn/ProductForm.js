@@ -80,44 +80,52 @@ function NewProductForm() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4" style={{
+      padding: '16px',
+      marginBottom:'26px',
+      border: '1px solid royalblue',
+      borderRadius: '10px',
+    }}>
       <h2 className='mb-4'>
-        Add New Product
+        <u>Add New Product</u>
       </h2>
       <form onSubmit={handleSubmit} method="POST" className="row g-3">
-        <div className="col-md-6 mb-3">
+        <div className="col-md-4 mb-3 p-2">
           <label className="form-label">Name:</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-sm"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            placeholder="Enter product name"
             required
           />
           {validationErrors.name && <div className="text-danger">{validationErrors.name}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-4 mb-3 p-2">
           <label className="form-label">Category:</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-sm"
             name="category"
             value={formData.category}
             onChange={handleChange}
+            placeholder="Enter product category"
             list="categoryList"
           />
           <datalist id="categoryList">
-            {categories.map((category) => (
-              <option key={category} value={category} />
-            ))}
+             {Array.from(new Set(categories)).map((category) => (
+             <option key={category} value={category} />  ))}
           </datalist>
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-4 mb-3 p-2">
           <label className="form-label">Brand:</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-sm"
             placeholder="Brand..."
             name="brand"
             value={formData.brand}
@@ -125,52 +133,58 @@ function NewProductForm() {
             list="brandList"
           />
           <datalist id="brandList">
-            {brands.map((brand) => (
-              <option key={brand} value={brand} />
-            ))}
+            {Array.from(new Set(brands)).map((brand) => (
+            <option key={brand} value={brand} />
+       ))}
           </datalist>
           {validationErrors.brand && <div className="text-danger">{validationErrors.brand}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Description:</label>
           <textarea
-            className="form-control"
+            className="form-control form-control-sm"
             name="description"
             value={formData.description}
             onChange={handleChange}
+            placeholder="Enter product description"
             required
           />
           {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Supplier Name:</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-sm"
             name="supplierName"
             value={formData.supplierName}
             onChange={handleChange}
+            placeholder="Enter supplier name"
             list="supplierList"
           />
-          <datalist id="supplierList">
-            {suppliers.map((supplierName) => (
-              <option key={supplierName} value={supplierName} />
+         <datalist id="supplierList">
+            {Array.from(new Set(suppliers)).map((supplierName) => (
+            <option key={supplierName} value={supplierName} />
             ))}
           </datalist>
           {validationErrors.supplierName && <div className="text-danger">{validationErrors.supplierName}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Supplier Contact Info:</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-sm"
             name="supplierContactInfo"
             value={formData.supplierContactInfo}
             onChange={handleChange}
+            placeholder="Enter supplier contact info"
             list="supplierInfoList"
           />
           <datalist id="supplierInfoList">
-            {suppliersInfo.map((supplierInfo) => (
+            {Array.from(new Set(suppliersInfo)).map((supplierInfo) => (
               <option key={supplierInfo} value={supplierInfo} />
             ))}
           </datalist>
@@ -178,52 +192,58 @@ function NewProductForm() {
             <div className="text-danger">{validationErrors.supplierContactInfo}</div>
           )}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Cost Price:</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control form-control-sm"
             name="costPrice"
             value={formData.costPrice}
             onChange={handleChange}
+            placeholder="Enter cost price"
             required
           />
           {validationErrors.costPrice && <div className="text-danger">{validationErrors.costPrice}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Selling Price:</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control form-control-sm"
             name="sellingPrice"
             value={formData.sellingPrice}
             onChange={handleChange}
+            placeholder="Enter selling price"
             required
           />
           {validationErrors.sellingPrice && <div className="text-danger">{validationErrors.sellingPrice}</div>}
         </div>
-        <div className="col-md-6 mb-3">
+  
+        <div className="col-md-6 mb-3 p-2">
           <label className="form-label">Quantity in Stock:</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control form-control-sm"
             name="quantityInStock"
             value={formData.quantityInStock}
             onChange={handleChange}
+            placeholder="Enter quantity in stock"
             required
           />
           {validationErrors.quantityInStock && (
             <div className="text-danger">{validationErrors.quantityInStock}</div>
           )}
         </div>
-        <div className="col-md-6 mb-3 d-flex justify-content-center">
-          <button type="submit"  id='add-product'>
-            <FontAwesomeIcon icon={faSquarePlus} style={{marginRight:'28px'}} />Add Product
+  
+        <center>
+          <button type="submit" id="add-product">
+            <FontAwesomeIcon icon={faSquarePlus} style={{ marginRight: '8px' }} />Add Product
           </button>
-        </div>
+        </center>
       </form>
     </div>
   );
-}
-
+};
 export default NewProductForm;

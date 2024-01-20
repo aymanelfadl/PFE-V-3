@@ -27,5 +27,21 @@ router.post("/newproduct", (req, res) => {
     });
 });
 
+router.post("/deleteproduct", async (req, res) => {
+  try {
+    const productId = req.body.productId;
+
+    const deletedProduct = await Product.findOneAndDelete({ _id: productId });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    return res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    return res.status(500).json({ error: "Error deleting product" });
+  }
+});
 
 module.exports = router;

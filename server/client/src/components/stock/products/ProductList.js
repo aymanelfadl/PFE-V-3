@@ -1,31 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import ProductDetails from './ProductDetails';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
+import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.css';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState({ value: 'za', label: <i className="fas fa-sort-alpha-up-alt"> <b>Sort From A to Z</b></i> });
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [isFullWidth, setIsFullWidth] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/products/productlist');
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/products/productlist');
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
+  const handleProductDelete = () => {
+    if (!selectedProduct || !selectedProduct._id) {
+      console.error("Invalid selected product");
+      return;
+    }
+    setShowConfirmation(true);
+  }
+  const handleConfirmDelete = () => {
+    const productId = selectedProduct._id;
+
+    axios.post('http://localhost:5000/api/products/deleteproduct', { productId })
+      .then(response => {
+        fetchProducts();
+      })
+      .catch(error => {
+        console.error(error.response.data.error);
+      });
+    setSelectedProduct(null);
+    setShowConfirmation(false);
+    setIsFullWidth(false);
+  };
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+    setSelectedProduct(null);
+    setIsFullWidth(false);
+  };
+  
+  const handleSortChange = (selectedOption) => {
+    setSortOption(selectedOption);
+  };
   const handleProductClick = (product) => {
     setSelectedProduct((prevSelectedProduct) =>
       prevSelectedProduct === product ? null : product
@@ -41,11 +69,7 @@ const ProductList = () => {
     });
   };
   
-  
 
-  const handleSortChange = (selectedOption) => {
-    setSortOption(selectedOption);
-  };
 
   const customOptions = [
     { value: 'za', label: <i className="fas fa-sort-alpha-up-alt"> <b>Sort From A to Z</b></i> },
@@ -70,34 +94,23 @@ const ProductList = () => {
   };
 
   const filteredAndSortedProducts = sortedProducts(
-    products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ),
+    products.filter((product) => {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const lowerCaseProductName = product.name.toLowerCase();
+      const lowerCaseCategory = product.category.toLowerCase();
+  
+      return (
+        lowerCaseProductName.includes(lowerCaseSearchTerm) || lowerCaseCategory.includes(lowerCaseSearchTerm)
+      );
+    }),
     sortOption
   );
+  
 
-  const selectAll = () => {
-    if (selectedProducts.length === filteredAndSortedProducts.length) {
-      setSelectedProducts([]);
-      setSelectedProduct(null)
-    } else {
-      setSelectedProducts([...filteredAndSortedProducts]);
-    }
-  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  const handelProductDelete = () => {
-    if (selectedProducts.length === 0) {
-      alert("Please select at least one product to delete.");
-      return;
-    }
-    const updatedProducts = products.filter(
-      (product) => !selectedProducts.includes(product)
-    );
-
-    setProducts(updatedProducts);
-    setSelectedProduct(null);
-    setSelectedProducts([]);
-  };
 
   return (
     <div className={`container mt-4 ${isFullWidth ? 'w-100' : ''}`}>
@@ -136,10 +149,7 @@ const ProductList = () => {
                   userSelect: "none",
                   padding: "28px",
                   cursor: "pointer",
-                  backgroundColor:
-                    selectedProducts.some(
-                      (selectedProduct) => selectedProduct._id === product._id
-                    ) || hoveredProduct === product
+                  backgroundColor: hoveredProduct === product
                       ? "#e0e0e0"
                       : "inherit",
                 }}
@@ -172,10 +182,18 @@ const ProductList = () => {
         <div className={isFullWidth ? 'col-md-6' : ''} id="pr-dt">
           {selectedProduct && <h2 style={{ marginTop: "-44px" }}>Product Details</h2>}
           {selectedProduct && <ProductDetails product={selectedProduct} />}
-          {selectedProduct && <button className="btn btn-danger p-2 " style={{ marginLeft: "28px", marginTop: "10px" }} onClick={handelProductDelete}>Delete Selected Products</button>}
-          {selectedProduct && <button className="btn btn-primary p-2 " style={{ marginLeft: "120px", marginTop: "10px" }} onClick={selectAll}>Select All Products</button>}
+          {selectedProduct && <center><button className="btn btn-danger p-2 " style={{ marginLeft: "28px", marginTop: "10px" }} onClick={handleProductDelete}>Delete Product</button></center>}
+          {showConfirmation && (
+          <div className="confirmation-modal-overlay">
+              <div className="confirmation-modal">
+                <p><b>Are you sure you want to delete this product?</b></p>
+                <button className="btn btn-danger p-2 " onClick={handleConfirmDelete}>Yes</button>
+                <button className="btn btn-primary p-2 " onClick={handleCancelDelete}>No</button>
+              </div>
+           </div>
+            )}
+           </div>
         </div>
-      </div>
     </div>
   );
 };
