@@ -1,0 +1,7 @@
+.Excel-page{
+    display: flex;
+}
+#empty-cell {
+    background-color: rgb(255, 109, 104);
+  }
+  

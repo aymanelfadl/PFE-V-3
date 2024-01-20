@@ -27,21 +27,22 @@ router.post("/newproduct", (req, res) => {
     });
 });
 
-router.post("/deleteproduct", async (req, res) => {
+router.post('/newproducts', async (req, res) => {
   try {
-    const productId = req.body.productId;
+    const { products } = req.body;
 
-    const deletedProduct = await Product.findOneAndDelete({ _id: productId });
-
-    if (!deletedProduct) {
-      return res.status(404).json({ error: "Product not found" });
+    if (!products || !Array.isArray(products)) {
+      return res.status(400).json({ message: 'Invalid request body' });
     }
 
-    return res.status(200).json({ message: "Product deleted successfully" });
+    const insertedProducts = await Product.insertMany(products);
+
+    res.status(201).json({ message: 'Products added successfully', insertedProducts });
   } catch (error) {
-    console.error("Error deleting product:", error);
-    return res.status(500).json({ error: "Error deleting product" });
+    console.error('Error adding products:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 module.exports = router;

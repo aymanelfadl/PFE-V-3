@@ -47,7 +47,7 @@ const Sidebar = () => {
             <NavLink exact to="/suppliers"  className="sidebar-link">
               <CDBSidebarMenuItem icon="users">Suppliers</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/convert" className="sidebar-link">
+            <NavLink exact to="/convertExcel" className="sidebar-link">
               <CDBSidebarMenuItem icon="file-excel">Convert Excel File</CDBSidebarMenuItem>
             </NavLink>
             <NavLink  onClick={LogOut}  className="sidebar-link">
