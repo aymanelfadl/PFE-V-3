@@ -26,7 +26,6 @@ router.post("/newproduct", (req, res) => {
       res.status(400).json({ error: 'Bad Request' });
     });
 });
-
 router.post('/newproducts', async (req, res) => {
   try {
     const { products } = req.body;
@@ -39,10 +38,10 @@ router.post('/newproducts', async (req, res) => {
 
     res.status(201).json({ message: 'Products added successfully', insertedProducts });
   } catch (error) {
-    console.error('Error adding products:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
+  console.error('Error adding products:', error);
+  res.status(500).json({ message: 'Internal Server Error', error: error.message });
+}
 
+});
 
 module.exports = router;

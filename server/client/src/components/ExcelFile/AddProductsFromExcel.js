@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import './ExcelPage.css';
@@ -7,11 +7,6 @@ const AddProductsFromExcel = () => {
   const [file, setFile] = useState(null);
   const [editableProducts, setEditableProducts] = useState([]);
   const [validationError, setValidationError] = useState(null);
-
-  useEffect(() => {
-    // Handle any side effects or updates needed when editableProducts changes
-    console.log('Editable Products Updated:', editableProducts);
-  }, [editableProducts]);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -40,7 +35,7 @@ const AddProductsFromExcel = () => {
         const products = productsFromExcel.slice(1).map((row) => {
           const product = {};
           headerRow.forEach((header, index) => {
-            product[header.toLowerCase()] = row[index] || 'Empty';
+            product[header] = row[index] || 'Empty';
           });
           return product;
         });
@@ -64,12 +59,10 @@ const AddProductsFromExcel = () => {
       'sellingPrice',
       'quantityInStock',
     ];
-
-    const sanitizedHeaderRow = headerRow.map((header) => header.trim().toLowerCase());
-    const sanitizedExpectedHeaders = expectedHeaders.map((header) => header.trim().toLowerCase());
-
-    return JSON.stringify(sanitizedHeaderRow) === JSON.stringify(sanitizedExpectedHeaders);
+  
+    return JSON.stringify(headerRow) === JSON.stringify(expectedHeaders);
   };
+  
 
   const handleEditChange = (value, rowIndex, colIndex) => {
     const updatedProducts = [...editableProducts];
@@ -78,17 +71,17 @@ const AddProductsFromExcel = () => {
     setEditableProducts(updatedProducts);
   };
 
+
   const handleConfirm = async () => {
     if (validateHeader(Object.keys(editableProducts[0]))) {
       try {
+        console.log({ products: editableProducts });
         const response = await axios.post('http://localhost:5000/api/products/newproducts', {
-          products: editableProducts,
-        });
-  
+        products: editableProducts,
+      });
         console.log('Server response:', response.data);
-  
       } catch (error) {
-        console.error('Error confirming products:', error);
+        console.error('Error confirming product:', error);
         console.log('Server response status:', error.response.status);
         console.log('Server response data:', error.response.data);
       }
@@ -97,10 +90,13 @@ const AddProductsFromExcel = () => {
     }
   };
   
+  
 
   return (
     <div className="container mt-4">
       <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
+      <p style={{fontSize:"11px"}}>NOTE: Ensure that the headers in the Excel file match this format (lowercase without extra spaces):
+        - name - description - category  - brand - supplierName - supplierContactInfo   - costPrice - sellingPrice   - quantityinStock </p>
       {validationError && <div className="text-danger">{validationError}</div>}
       {editableProducts.length > 0 && (
         <div className="mt-4">
