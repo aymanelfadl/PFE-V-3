@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 import './ExcelPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faFileImport} from '@fortawesome/free-solid-svg-icons';
+
+
 
 const AddProductsFromExcel = () => {
   const [file, setFile] = useState(null);
@@ -35,7 +40,7 @@ const AddProductsFromExcel = () => {
         const products = productsFromExcel.slice(1).map((row) => {
           const product = {};
           headerRow.forEach((header, index) => {
-            product[header] = row[index] || 'Empty';
+            product[header] = row[index] || 'Empty-Cell';
           });
           return product;
         });
@@ -93,16 +98,22 @@ const AddProductsFromExcel = () => {
   
 
   return (
-    <div className="container mt-4">
-      <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
-      <p style={{fontSize:"11px"}}>NOTE: Ensure that the headers in the Excel file match this format (lowercase without extra spaces):
-        - name - description - category  - brand - supplierName - supplierContactInfo   - costPrice - sellingPrice   - quantityinStock </p>
-      {validationError && <div className="text-danger">{validationError}</div>}
+    <div className="ayman">
+      {editableProducts.length <=0 && <div className='elfadl'>
+        <div className='hamid'>
+          <FontAwesomeIcon icon={faFileImport} style={{fontSize:"95px"}} />
+          <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
+        <p style={{fontSize:"11px"}}> NOTE: Ensure that the headers in the Excel file match this format (lowercase without extra spaces):
+          - name - description - category  - brand - supplierName - supplierContactInfo   - costPrice - sellingPrice   - quantityinStock 
+        </p>
+        </div>
+      </div>}
+     {validationError && <div className="text-danger">{validationError}</div>}
       {editableProducts.length > 0 && (
         <div className="mt-4">
-          <table className="table table-hover">
+          <table className="table table-hover" style={{padding:"28px"}}>
             <thead className="sticky-top bg-light">
-              <tr>
+              <tr style={{backgroundColor:"royalblue"}}>
                 {Object.keys(editableProducts[0]).map((header, colIndex) => (
                   <th key={colIndex}>{header}</th>
                 ))}
@@ -114,7 +125,7 @@ const AddProductsFromExcel = () => {
                   {Object.entries(product).map(([key, value], colIndex) => (
                     <td
                       key={colIndex}
-                      id={value === 'Empty' ? 'empty-cell' : ''}
+                      id={value === 'Empty-Cell' ? 'empty-cell' : ''}
                       contentEditable={true}
                       onBlur={(e) => handleEditChange(e.target.innerText, rowIndex, colIndex)}
                     >
@@ -125,9 +136,13 @@ const AddProductsFromExcel = () => {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={handleConfirm}>
-            Confirm Products
-          </button>
+          <center>
+          <NavLink exact to="/main" >
+            <button className="btn btn-primary" onClick={handleConfirm}>
+              Insert Your Products
+            </button>
+          </NavLink>
+          </center>
         </div>
       )}
     </div>

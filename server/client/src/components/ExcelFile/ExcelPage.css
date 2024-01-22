@@ -4,4 +4,48 @@
 #empty-cell {
     background-color: rgb(255, 109, 104);
   }
-  
+
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .ayman {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .elfadl {
+    width: 450px;
+    margin: auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 25px;
+    box-shadow: 7px 20px 20px rgb(210, 227, 244);
+  }
+  .hamid{
+    text-align: center;
+    border: 3px dashed rgb(210, 227, 244);
+    padding: 1.5rem;
+    position: relative;
+    cursor: pointer;
+  }
+  .hamid p {
+    font-size: 0.87rem;
+    margin-top: 28px;
+    color: #bbcada;
+  }
+  .hamid input {
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+  }

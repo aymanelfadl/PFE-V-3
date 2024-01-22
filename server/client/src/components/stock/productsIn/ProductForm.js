@@ -82,7 +82,6 @@ function NewProductForm() {
   return (
     <div className="container mt-4" style={{
       padding: '16px',
-      marginBottom:'26px',
       border: '1px solid royalblue',
       borderRadius: '10px',
     }}>
