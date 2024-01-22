@@ -1,18 +1,21 @@
 .Excel-page{
     display: flex;
 }
+
+.centered-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px; 
+}
+
+
 #empty-cell {
     background-color: rgb(255, 109, 104);
-  }
+}
 
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
   .ayman {
-    width: 100vw;
-    height: 100vh;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,4 +51,18 @@
     right: 0;
     opacity: 0;
     cursor: pointer;
+  }
+
+  #err{
+    position: absolute;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 90px; 
+      text-align: center;
+      background-color: rgba(255, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 1000;
   }

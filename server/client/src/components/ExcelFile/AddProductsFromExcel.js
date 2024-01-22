@@ -4,7 +4,8 @@ import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import './ExcelPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faFileImport} from '@fortawesome/free-solid-svg-icons';
+import { faUpload} from '@fortawesome/free-solid-svg-icons';
+import ExportToExcel from './ExportToExcel';
 
 
 
@@ -95,58 +96,76 @@ const AddProductsFromExcel = () => {
     }
   };
   
-  
+  const displayErrorMessage = () => {
+    setTimeout(() => {
+      setValidationError(null);
+    }, 3000); 
+  };
 
   return (
-    <div className="ayman">
-      {editableProducts.length <=0 && <div className='elfadl'>
-        <div className='hamid'>
-          <FontAwesomeIcon icon={faFileImport} style={{fontSize:"95px"}} />
-          <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
-        <p style={{fontSize:"11px"}}> NOTE: Ensure that the headers in the Excel file match this format (lowercase without extra spaces):
-          - name - description - category  - brand - supplierName - supplierContactInfo   - costPrice - sellingPrice   - quantityinStock 
-        </p>
-        </div>
-      </div>}
-     {validationError && <div className="text-danger">{validationError}</div>}
+  <>
+    {validationError && <div className='text-white' id='err'>{validationError}{displayErrorMessage()}</div>}
+
+    <div className='centered-container'>
+      <div className="ayman" style={{ width: "100%" }}>
+        {editableProducts.length <= 0 && (
+          <div className='elfadl'>
+            <div className='hamid'>
+              <FontAwesomeIcon icon={faUpload} style={{ fontSize: "95px" }} />
+              <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
+              <p style={{ fontSize: "11px" }}> NOTE: Ensure that the headers in the Excel file match this format (lowercase without extra spaces):
+                - name - description - category  - brand - supplierName - supplierContactInfo   - costPrice - sellingPrice   - quantityinStock
+              </p>
+            </div>
+          </div>
+        )}
+        {editableProducts.length <= 0 && <ExportToExcel />}
+      </div>
+
       {editableProducts.length > 0 && (
         <div className="mt-4">
-          <table className="table table-hover" style={{padding:"28px"}}>
-            <thead className="sticky-top bg-light">
-              <tr style={{backgroundColor:"royalblue"}}>
-                {Object.keys(editableProducts[0]).map((header, colIndex) => (
-                  <th key={colIndex}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody style={{ maxHeight: '400px', overflowY: 'auto' }}>
-              {editableProducts.map((product, rowIndex) => (
-                <tr key={rowIndex}>
-                  {Object.entries(product).map(([key, value], colIndex) => (
-                    <td
-                      key={colIndex}
-                      id={value === 'Empty-Cell' ? 'empty-cell' : ''}
-                      contentEditable={true}
-                      onBlur={(e) => handleEditChange(e.target.innerText, rowIndex, colIndex)}
-                    >
-                      {value}
-                    </td>
+          <h2>Edit Products</h2>
+          <div className="table-container" style={{ maxHeight: '480px', overflowY: 'auto' }}>
+            <table className="table table-hover" style={{ padding: "28px" }}>
+              <thead className="sticky-top bg-light">
+                <tr style={{ backgroundColor: "royalblue" }}>
+                  {Object.keys(editableProducts[0]).map((header, colIndex) => (
+                    <th key={colIndex}>{header}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {editableProducts.map((product, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Object.entries(product).map(([key, value], colIndex) => (
+                      <td
+                        key={colIndex}
+                        id={value === 'Empty-Cell' ? 'empty-cell' : ''}
+                        contentEditable={true}
+                        onBlur={(e) => handleEditChange(e.target.innerText, rowIndex, colIndex)}
+                      >
+                        {value}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <center>
-          <NavLink exact to="/main" >
-            <button className="btn btn-primary" onClick={handleConfirm}>
-              Insert Your Products
-            </button>
-          </NavLink>
+            <NavLink exact to="/main" >
+              <button className="btn btn-primary mt-3 w-50" onClick={handleConfirm}>
+                Insert Your Products
+              </button>
+            </NavLink>
           </center>
         </div>
       )}
     </div>
-  );
+  </>
+);
+
+  
 };
 
 export default AddProductsFromExcel;

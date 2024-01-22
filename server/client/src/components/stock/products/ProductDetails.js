@@ -18,8 +18,8 @@ const ProductDetails = ({ product }) => {
           <p className="card-text">
             <FontAwesomeIcon icon={faBuilding} /> <strong>Brand:</strong> {product.brand}
           </p>
-          <p className="card-text">
-            <FontAwesomeIcon icon={faUser} /> <strong>Supplier Name:</strong> {product.supplierName}
+          <p className="card-text" >
+            <FontAwesomeIcon icon={faUser} /> <strong> Supplier Name:</strong> {product.supplierName}
           </p>
           <p className="card-text">
             <FontAwesomeIcon icon={faInfoCircle} /> <strong>Supplier Infos:</strong> {product.supplierContactInfo}
