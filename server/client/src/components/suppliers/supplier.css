@@ -1,0 +1,50 @@
+.main-page {
+    display: flex;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid whitesmoke;
+    margin-top: 50px;
+    height: 40px;
+    width: 700px;
+    list-style-type: none;
+}
+
+.link:hover {
+    color:black;
+   
+}
+
+.link .selected {
+    color:#89cff0;
+}
+.view{
+    border: none;
+    border-radius: 50px;
+    background-color:#007fff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+    color:  #f0f8ff ;
+}
+.total{
+    width:150px;
+    border: 1px solid #f0f8ff ;
+    border-radius:30px;
+    background-color: #007fff;
+    color:  #f0f8ff ;
+    
+}
+.quantity{
+    width:150px;
+    border: 1px solid  #f0f8ff;
+    border-radius:30px;
+    background-color:#007fff;
+    color:  #f0f8ff;
+}
+.close-model{
+    margin-bottom: 4px;
+}
+
+

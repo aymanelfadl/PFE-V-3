@@ -62,4 +62,12 @@ router.post('/newproducts', async (req, res) => {
 
 });
 
+router.get("/productsBySupplier/:supplierName", (req, res) => {
+  const supplierName = req.params.supplierName;
+
+  Product.find({ supplierName: supplierName }) 
+    .then((products) => res.json(products))
+    .catch((err) => res.status(500).json({ error: "Internal Server Error" }));
+});
+
 module.exports = router;

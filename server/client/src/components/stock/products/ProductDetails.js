@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faInfoCircle,faClock } from '@fortawesome/free-solid-svg-icons';
 
+
 const ProductDetails = ({ product }) => {
   const entryDate = new Date(product.date);
   const formattedDate = entryDate.toLocaleDateString();
@@ -9,7 +10,7 @@ const ProductDetails = ({ product }) => {
     <div className="container mt-4">
       <div className="card">
         <div className="card-body" style={{padding:"28px"}}>
-          <p className="card-text">
+          <p className="card-text labelDesign">
             <FontAwesomeIcon icon={faTag} /> <strong>Name:</strong> {product.name}
           </p>
           <p className="card-text">

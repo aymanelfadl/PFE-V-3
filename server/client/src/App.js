@@ -4,6 +4,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import StockPage from './components/stock/productsIn/StockPage';
 import MainPage from './components/stock/products/MainPage';
 import ExeclPage from './components/ExcelFile/ExcelPage';
+import MainSupp from './components/suppliers/MainSupp';
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -27,7 +28,8 @@ function App() {
               <>
                 <Route path="/main" element={<MainPage />} />
                 <Route path="/stock" element={<StockPage />}  />
-                <Route path="/convertExcel" element={<ExeclPage/>}  />
+                <Route path="/convertExcel" element={<ExeclPage />}  />
+                <Route path="/suppliers" element={<MainSupp />} />
               </>
             )}
           </Routes>

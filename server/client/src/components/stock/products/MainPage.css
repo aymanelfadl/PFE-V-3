@@ -32,3 +32,11 @@
     cursor: pointer;
   }
   
+.labelDesign{
+    border: none; 
+    border-radius: 50px;
+    background-color:#007fff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+    color:  #f0f8ff ;
+}
