@@ -34,9 +34,15 @@
   
 .labelDesign{
     border: none; 
-    border-radius: 50px;
-    background-color:#007fff;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: small;
-    color:  #f0f8ff ;
+    border-radius: 40px;
+    font-family:sans-serif;
+    word-spacing: 4px;
+}
+
+.title{
+    margin-right: 400px;
+    width: 47%;
+    height: 100%;
+    text-align: center;
+    margin-left: 1%;
 }

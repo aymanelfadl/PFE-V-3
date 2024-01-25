@@ -131,8 +131,7 @@ const ProductList = () => {
       </div>
 
       <div className="row" style={{ marginTop: "10px" }}>
-        <h2>Product List</h2>
-
+        <h3 className={`${isFullWidth? 'rounded-pill title border-bottom  border-dark-subtle ' : 'text-center rounded-pill  border-bottom  border-dark-subtle'}`}>Product List</h3>
         <div className={isFullWidth ? 'col-md-6 border-end' : 'border-end'}>
           <Select
             options={customOptions}
@@ -163,7 +162,7 @@ const ProductList = () => {
                   <div style={{ marginLeft: '8px' }}>{product.category}</div>
                 </div>
                 <span
-                  className={`badge bg-primary rounded-pill ${
+                  className={`badge bg-primary text-wrap rounded-start-pill p-3 ${
                     product.quantityInStock === 0
                       ? 'bg-danger'
                       : product.quantityInStock < 5
@@ -180,7 +179,7 @@ const ProductList = () => {
         </div>
 
         <div className={isFullWidth ? 'col-md-6' : ''} id="pr-dt">
-          {selectedProduct && <h2 style={{ marginTop: "-44px" }}>Product Details</h2>}
+          {selectedProduct && <h3 style={{ marginTop: "-44px"}} className="text-center border-bottom border-dark-subtle rounded-pill">Product Details</h3>}
           {selectedProduct && <ProductDetails product={selectedProduct} />}
           {selectedProduct && <center><button className="btn btn-danger p-2 " style={{ marginLeft: "28px", marginTop: "10px" }} onClick={handleProductDelete}>Delete Product</button></center>}
           {showConfirmation && (
