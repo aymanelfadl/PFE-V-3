@@ -132,7 +132,7 @@ const ProductList = () => {
 
       <div className="row" style={{ marginTop: "10px" }}>
         <h3 className={`${isFullWidth? 'rounded-pill title border-bottom  border-dark-subtle ' : 'text-center rounded-pill  border-bottom  border-dark-subtle'}`}>Product List</h3>
-        <div className={isFullWidth ? 'col-md-6 border-end' : 'border-end'}>
+        <div className={isFullWidth ? 'col-md-6 border-end' : ''}>
           <Select
             options={customOptions}
             value={sortOption}
