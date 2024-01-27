@@ -41,7 +41,7 @@ const AddProductsFromExcel = () => {
         const products = productsFromExcel.slice(1).map((row) => {
           const product = {};
           headerRow.forEach((header, index) => {
-            product[header] = row[index] || 'Empty-Cell';
+            product[header] = row[index] || '';
           });
           return product;
         });
@@ -105,11 +105,17 @@ const AddProductsFromExcel = () => {
   return (
   <>
     {validationError && <div className='text-white' id='err'>{validationError}{displayErrorMessage()}</div>}
-
-    <div className='centered-container'>
-      <div className="ayman" style={{ width: "100%" }}>
+    {editableProducts.length <= 0 &&
+      <div className="center-absolute">
+        <h3 className='text-center p-2 rounded-pill  border-bottom  border-dark-subtle mt-3' >
+          Products Management
+        </h3>
+        </div>}
         {editableProducts.length <= 0 && (
-          <div className='elfadl'>
+      <div className='container '>
+      <div className="row"> 
+      <div className='col'>
+          <div className='elfadl  border-top'>
             <div className='hamid'>
               <FontAwesomeIcon icon={faUpload} style={{ fontSize: "95px" }} />
               <input className="form-control" type="file" accept=".xlsx, .xls, .ods" onChange={handleFileChange} />
@@ -118,50 +124,56 @@ const AddProductsFromExcel = () => {
               </p>
             </div>
           </div>
-        )}
-        {editableProducts.length <= 0 && <ExportToExcel />}
-      </div>
-
-      {editableProducts.length > 0 && (
-        <div className="mt-4">
-          <h2>Edit Products</h2>
-          <div className="table-container" style={{ maxHeight: '480px', overflowY: 'auto' }}>
-            <table className="table table-hover" style={{ padding: "28px" }}>
-              <thead className="sticky-top bg-light">
-                <tr style={{ backgroundColor: "royalblue" }}>
-                  {Object.keys(editableProducts[0]).map((header, colIndex) => (
-                    <th key={colIndex}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {editableProducts.map((product, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {Object.entries(product).map(([key, value], colIndex) => (
-                      <td
-                        key={colIndex}
-                        id={value === 'Empty-Cell' ? 'empty-cell' : ''}
-                        contentEditable={true}
-                        onBlur={(e) => handleEditChange(e.target.innerText, rowIndex, colIndex)}
-                      >
-                        {value}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
-          <center>
-            <NavLink exact to="/main" >
-              <button className="btn btn-primary mt-3 w-50" onClick={handleConfirm}>
-                Insert Your Products
-              </button>
-            </NavLink>
-          </center>
+        <div className='col'>
+        {editableProducts.length <= 0 && <ExportToExcel />}
         </div>
-      )}
+        </div>
+        </div>)}
+      
+        {editableProducts.length > 0 && (
+  <div className="container shadow px-4 my-3 rounded" style={{width:"80%"}}>
+    <h3 className='text-center p-1 rounded-pill border-bottom border-dark-subtle mt-3'>Edit Products</h3>
+    <div className="table-container border-top" style={{ maxHeight: '480px', overflowY: 'auto', overflowX: 'auto', maxWidth: "100%" }}>
+      <table className="table table-hover" style={{ padding: "28px" }}>
+        <thead className="sticky-top bg-light">
+          <tr style={{ backgroundColor: "royalblue" }}>
+            {Object.keys(editableProducts[0]).map((header, colIndex) => (
+              <th key={colIndex} style={{minWidth: "200px", height: "40px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {header.trim()}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {editableProducts.map((product, rowIndex) => (
+            <tr key={rowIndex}>
+              {Object.entries(product).map(([key, value], colIndex) => (
+                <td
+                  key={colIndex}
+                  id={value === '' ? 'empty-cell' : ''}
+                  contentEditable={true}
+                  onBlur={(e) => handleEditChange(e.target.innerText, rowIndex, colIndex)}
+                  style={{ overflowWrap: "break-word" }}
+                >
+                  {value}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+    <center>
+      <NavLink exact to="/main" >
+        <button className="btn btn-primary mt-1 w-50" onClick={handleConfirm}>
+          Insert Your Products
+        </button>
+      </NavLink>
+    </center>
+  </div>
+)}
+
   </>
 );
 

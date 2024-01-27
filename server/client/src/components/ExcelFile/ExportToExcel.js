@@ -36,7 +36,7 @@ const ExportToExcel = () => {
 
   return (
     <div className="ayman">
-      <div className='elfadl'>
+      <div className='elfadl border-top' style={{height:"325px"}}>
         <div className='hamid'>
           <FontAwesomeIcon icon={faDownload}  style={{ fontSize:"95px" }} onClick={fetchProductsFromDatabase}/>
           {loading ? (
@@ -47,9 +47,9 @@ const ExportToExcel = () => {
             <p style={{ fontSize:"11px" }}>
               NOTE: Click the download icon to fetch data and export it to an Excel file.
               {exportedData.length > 0 ? (
-                <span> Once data is fetched, click the "Export to Excel" button to download the file.</span>
-              ) : (
-                <span> After fetching data, the "Export to Excel" button will be available for download.</span>
+                <span> After fetching data, the <b>"Export to Excel"</b> button will be available for download.</span>
+                ) : (
+                <span> Once data is fetched, click the <b>"Export to Excel"</b> button to download the file.</span>
               )}
             </p>
           )}

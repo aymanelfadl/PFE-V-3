@@ -9,24 +9,17 @@
   padding: 20px; 
 }
 
-
 #empty-cell {
     background-color: rgb(255, 109, 104);
 }
 
-  .ayman {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+ 
   .elfadl {
-    width: 450px;
-    margin: auto;
-    padding: 2rem;
+    padding: 2.5rem ;
     background: #ffffff;
     border-radius: 25px;
     box-shadow: 7px 20px 20px rgb(210, 227, 244);
+    margin-top: 100px;
   }
   .hamid{
     text-align: center;
@@ -65,4 +58,12 @@
       border-radius: 10px;
       padding: 10px;
       z-index: 1000;
+  }
+
+  .center-absolute {
+    position: absolute;
+    top: 7%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    width: 950px;
   }
