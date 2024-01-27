@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import {faSquarePlus, faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faMailForward, faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import "./StockPage.css";
 
@@ -79,170 +79,178 @@ function NewProductForm() {
     }
   };
 
+  const inputGroupClassName = "input-group  p-4";
+
+ 
   return (
-    <div className="container mt-4" style={{
-      padding: '16px',
-      border: '1px solid royalblue',
-      borderRadius: '10px',
-    }}>
-      <h2 className='mb-4'>
-        <u>Add New Product</u>
-      </h2>
-      <form onSubmit={handleSubmit} method="POST" className="row g-3">
-        <div className="col-md-4 mb-3 p-2">
-          <label className="form-label">Name:</label>
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter product name"
-            required
-          />
-          {validationErrors.name && <div className="text-danger">{validationErrors.name}</div>}
-        </div>
+      <div className="container mt-3 mb-3 border border-2 rounded-4 shadow">
+        <h3 className='text-center rounded-pill  border-bottom  border-dark-subtle mt-3'>
+          Add New Product
+        </h3>
+        <form onSubmit={handleSubmit} method="POST" className="row g-3">
+          <div className="row">
+            <div className="col mt-5 border-end border-top border-light">
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faTag}/></span>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter The Product Name..."
+                  required
+                />
+                {validationErrors.name && <div className="text-danger">{validationErrors.name}</div>}
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faLayerGroup}/></span>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  placeholder="Enter The Product Category..."
+                  list="categoryList"
+                />
+                <datalist id="categoryList">
+                  {Array.from(new Set(categories)).map((category) => (
+                    <option key={category} value={category} />
+                  ))}
+                </datalist>
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faBuilding}/></span>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="brand"
+                  placeholder='Entre The Product Brand...'
+                  value={formData.brand}
+                  onChange={handleChange}
+                  list="brandList"
+                />
+                <datalist id="brandList">
+                  {Array.from(new Set(brands)).map((brand) => (
+                    <option key={brand} value={brand} />
+                  ))}
+                </datalist>
+                {validationErrors.brand && <div className="text-danger">{validationErrors.brand}</div>}
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faEdit}/></span>
+                <textarea
+                  className="form-control form-control-sm"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Enter The Product Description..."
+                  style={{ height: '120px' }}
+                  required
+                />
+                {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
+              </div>
+            </div>
+    
+            <div className='col mt-5 border-left border-top border-light'>
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faUser}/></span>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="supplierName"
+                  value={formData.supplierName}
+                  onChange={handleChange}
+                  placeholder="Enter The Supplier Name..."
+                  list="supplierList"
+                />
+                <datalist id="supplierList">
+                  {Array.from(new Set(suppliers)).map((supplierName) => (
+                    <option key={supplierName} value={supplierName} />
+                  ))}
+                </datalist>
+                {validationErrors.supplierName && <div className="text-danger">{validationErrors.supplierName}</div>}
+              </div>
+              
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faMailForward}/></span>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="supplierContactInfo"
+                  value={formData.supplierContactInfo}
+                  onChange={handleChange}
+                  placeholder="Enter The Supplier Contact..."
+                  list="supplierInfoList"
+                />
+                <datalist id="supplierInfoList">
+                  {Array.from(new Set(suppliersInfo)).map((supplierInfo) => (
+                    <option key={supplierInfo} value={supplierInfo} />
+                  ))}
+                </datalist>
+                {validationErrors.supplierContactInfo && (
+                  <div className="text-danger">{validationErrors.supplierContactInfo}</div>
+                )}
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faMoneyBillAlt}/></span>
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  name="costPrice"
+                  value={formData.costPrice}
+                  onChange={handleChange}
+                  placeholder="Enter The Cost Price..."
+                  required
+                />
+                {validationErrors.costPrice && <div className="text-danger">{validationErrors.costPrice}</div>}
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faMoneyBill}/></span>
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  name="sellingPrice"
+                  value={formData.sellingPrice}
+                  onChange={handleChange}
+                  placeholder="Enter The Selling Price..."
+                  required
+                />
+                {validationErrors.sellingPrice && <div className="text-danger">{validationErrors.sellingPrice}</div>}
+              </div>
+    
+              <div className={inputGroupClassName}>
+                <span class="input-group-text"><FontAwesomeIcon icon={faCubes}/></span>
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  name="quantityInStock"
+                  value={formData.quantityInStock}
+                  onChange={handleChange}
+                  placeholder="Enter The Quantity In The Stock..."
+                  required
+                />
+                {validationErrors.quantityInStock && (
+                  <div className="text-danger">{validationErrors.quantityInStock}</div>
+                )}
+              </div>
+            </div>
+          </div>
+    
+          <center>
+            <button type="submit" id="add-product">
+              <FontAwesomeIcon icon={faSquarePlus} style={{ marginRight: '8px' }} />Add The Product
+            </button>
+          </center>
+        </form>
+      </div>
+    );
   
-        <div className="col-md-4 mb-3 p-2">
-          <label className="form-label">Category:</label>
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder="Enter product category"
-            list="categoryList"
-          />
-          <datalist id="categoryList">
-             {Array.from(new Set(categories)).map((category) => (
-             <option key={category} value={category} />  ))}
-          </datalist>
-        </div>
-  
-        <div className="col-md-4 mb-3 p-2">
-          <label className="form-label">Brand:</label>
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            placeholder="Brand..."
-            name="brand"
-            value={formData.brand}
-            onChange={handleChange}
-            list="brandList"
-          />
-          <datalist id="brandList">
-            {Array.from(new Set(brands)).map((brand) => (
-            <option key={brand} value={brand} />
-       ))}
-          </datalist>
-          {validationErrors.brand && <div className="text-danger">{validationErrors.brand}</div>}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Description:</label>
-          <textarea
-            className="form-control form-control-sm"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Enter product description"
-            required
-          />
-          {validationErrors.description && <div className="text-danger">{validationErrors.description}</div>}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Supplier Name:</label>
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            name="supplierName"
-            value={formData.supplierName}
-            onChange={handleChange}
-            placeholder="Enter supplier name"
-            list="supplierList"
-          />
-         <datalist id="supplierList">
-            {Array.from(new Set(suppliers)).map((supplierName) => (
-            <option key={supplierName} value={supplierName} />
-            ))}
-          </datalist>
-          {validationErrors.supplierName && <div className="text-danger">{validationErrors.supplierName}</div>}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Supplier Contact Info:</label>
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            name="supplierContactInfo"
-            value={formData.supplierContactInfo}
-            onChange={handleChange}
-            placeholder="Enter supplier contact info"
-            list="supplierInfoList"
-          />
-          <datalist id="supplierInfoList">
-            {Array.from(new Set(suppliersInfo)).map((supplierInfo) => (
-              <option key={supplierInfo} value={supplierInfo} />
-            ))}
-          </datalist>
-          {validationErrors.supplierContactInfo && (
-            <div className="text-danger">{validationErrors.supplierContactInfo}</div>
-          )}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Cost Price:</label>
-          <input
-            type="number"
-            className="form-control form-control-sm"
-            name="costPrice"
-            value={formData.costPrice}
-            onChange={handleChange}
-            placeholder="Enter cost price"
-            required
-          />
-          {validationErrors.costPrice && <div className="text-danger">{validationErrors.costPrice}</div>}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Selling Price:</label>
-          <input
-            type="number"
-            className="form-control form-control-sm"
-            name="sellingPrice"
-            value={formData.sellingPrice}
-            onChange={handleChange}
-            placeholder="Enter selling price"
-            required
-          />
-          {validationErrors.sellingPrice && <div className="text-danger">{validationErrors.sellingPrice}</div>}
-        </div>
-  
-        <div className="col-md-6 mb-3 p-2">
-          <label className="form-label">Quantity in Stock:</label>
-          <input
-            type="number"
-            className="form-control form-control-sm"
-            name="quantityInStock"
-            value={formData.quantityInStock}
-            onChange={handleChange}
-            placeholder="Enter quantity in stock"
-            required
-          />
-          {validationErrors.quantityInStock && (
-            <div className="text-danger">{validationErrors.quantityInStock}</div>
-          )}
-        </div>
-  
-        <center>
-          <button type="submit" id="add-product">
-            <FontAwesomeIcon icon={faSquarePlus} style={{ marginRight: '8px' }} />Add Product
-          </button>
-        </center>
-      </form>
-    </div>
-  );
 };
 export default NewProductForm;
