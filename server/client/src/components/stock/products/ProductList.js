@@ -3,7 +3,7 @@ import ProductDetails from './ProductDetails';
 import Select from 'react-select';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTag , faEquals ,faGreaterThan, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import { faUserTag , faSpinner} from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.css';
 
@@ -168,8 +168,8 @@ const ProductList = () => {
                 onMouseLeave={() => setHoveredProduct(null)}
               >
                 <div className="ms-2 me-auto">
-                  <div className="fw-bold" style={{fontSize:"25px", marginLeft:"-15px",}}><span className="mx-2"  ><FontAwesomeIcon icon={faEquals} style={{fontSize:"14px"}} /><FontAwesomeIcon icon={faGreaterThan} style={{fontSize:"14px"}} /></span>{product.name}</div>
-                  <div style={{ marginLeft: '12px', fontSize:"20px" }} ><FontAwesomeIcon icon={faUserTag} className=' mx-3' />{product.category}</div>
+                  <div className="fw-bold" style={{fontSize:"25px", marginLeft:"-15px",}}><span className="mx-2"  >{product.name}</span></div>
+                  <div style={{ marginLeft: '12px', fontSize:"20px" }} ><FontAwesomeIcon icon={faUserTag} className=' mx-3' />{product.supplierName}</div>
                 </div>
                 <span
                   className={`badge bg-primary text-wrap rounded-start-pill p-3 ${

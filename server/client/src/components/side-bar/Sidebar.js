@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -9,24 +9,18 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import "./Sidebar.css";
-
+import ImageAvatars from"./ImageAvatars"
 
 const Sidebar = () => {
 
+  const [avatreDiv, setAvatareDiv] = useState(true);
 
-  const userName = localStorage.getItem('userName');
-  const LogOut = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem("userName");
-    window.location.href = "/";
-  };
-  
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="rgb(67, 111, 255)">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+      <CDBSidebar textColor="#fff" backgroundColor="rgb(67, 111, 255)" >
+        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>} >
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
+            OpTiStock
           </a>
         </CDBSidebarHeader>
 
@@ -50,14 +44,13 @@ const Sidebar = () => {
             <NavLink exact to="/convertExcel" className="sidebar-link">
               <CDBSidebarMenuItem icon="file-excel">Convert Excel File</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink  onClick={LogOut}  className="sidebar-link">
-              <CDBSidebarMenuItem icon="door-open">Log Out</CDBSidebarMenuItem>
-            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div style={{ padding: '20px 5px' }}>{userName}</div>
+           <CDBSidebarFooter>
+          <div className='mx-auto mb-2' style={{ width: avatreDiv ? "40px": "200px" ,transition: 'width 0.5s',}} onClick={handlAvatreDiv => {setAvatareDiv(!avatreDiv)}}>
+            <ImageAvatars />
+          </div>
         </CDBSidebarFooter>
       </CDBSidebar>
     </div>
@@ -65,4 +58,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

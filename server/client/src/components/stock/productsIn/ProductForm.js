@@ -83,7 +83,7 @@ function NewProductForm() {
 
  
   return (
-      <div className="container mt-3 mb-3 border border-2 rounded-4 shadow">
+      <div className="container mt-3 mb-3 border border-2 rounded-4 shadow " style={{width:"900px"}}>
         <h3 className='text-center rounded-pill  border-bottom  border-dark-subtle mt-3'>
           Add New Product
         </h3>

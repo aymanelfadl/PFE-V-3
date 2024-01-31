@@ -11,9 +11,6 @@ const cors = require('cors');
 app.use(cors());
 
 
-
-
-// Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
     extended: false

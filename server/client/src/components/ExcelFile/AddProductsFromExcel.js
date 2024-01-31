@@ -106,8 +106,8 @@ const AddProductsFromExcel = () => {
   <>
     {validationError && <div className='text-white' id='err'>{validationError}{displayErrorMessage()}</div>}
     {editableProducts.length <= 0 &&
-      <div className="center-absolute">
-        <h3 className='text-center p-2 rounded-pill  border-bottom  border-dark-subtle mt-3' >
+      <div className="center-absolute ">
+        <h3 className='text-center p-2 rounded-pill  border-bottom  border-dark-subtle mt-3'  style={{width:"800px"}}>
           Products Management
         </h3>
         </div>}
