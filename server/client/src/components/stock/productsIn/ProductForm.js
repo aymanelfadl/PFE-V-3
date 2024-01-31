@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSquarePlus, faTag, faCubes, faMoneyBill, faLayerGroup, faMoneyBillAlt, faBuilding, faUser, faMailForward, faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import "./StockPage.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function NewProductForm() {
   const [formData, setFormData] = useState({
@@ -70,6 +72,7 @@ function NewProductForm() {
         quantityInStock: '',
       });
       setValidationErrors({});
+      toast.success('Product added successfully!');
     } catch (error) {
       if (error.response && error.response.status === 400 && error.response.data.validationErrors) {
         setValidationErrors(error.response.data.validationErrors);
@@ -249,6 +252,18 @@ function NewProductForm() {
             </button>
           </center>
         </form>
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
       </div>
     );
   
