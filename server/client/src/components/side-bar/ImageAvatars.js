@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import BoxList from './BoxList';
+import { useNotificationContext } from './NotificationContext';
+
 
 function stringAvatar(name) {
   return {
@@ -14,7 +16,8 @@ function stringAvatar(name) {
 export default function ImageAvatars() {
   const userName = localStorage.getItem('userName');
   const [displayBoxList, setDisplayBoxList] = useState(false);
-
+  const { notificationCount } = useNotificationContext();
+  
   const LogOut = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem("userName");
@@ -25,10 +28,11 @@ export default function ImageAvatars() {
     <div style={{ position: 'relative', display: 'inline-block',cursor:'pointer' }}>
         <Avatar {...stringAvatar(userName)} onClick={onAvatareClick => setDisplayBoxList(!displayBoxList)} />
         {displayBoxList && 
-          <div style={{ position: 'absolute', top: '-265%', left: '50%', zIndex: '1000'}}>
+          <div style={{ position: 'absolute', top: '-390%', left: '50%', zIndex: '1000'}}>
             <BoxList onLogOut={LogOut}/>
           </div>
         }
+        
     </div>
   );
 }
