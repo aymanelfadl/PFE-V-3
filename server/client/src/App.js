@@ -5,7 +5,6 @@ import StockPage from './components/stock/productsIn/StockPage';
 import MainPage from './components/stock/products/MainPage';
 import ExeclPage from './components/ExcelFile/ExcelPage';
 import MainSupp from './components/suppliers/MainSupp';
-import { NotificationProvider } from './components/side-bar/NotificationContext';
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -18,7 +17,7 @@ function App() {
   }, []);
 
   return (
-      <NotificationProvider>
+    <>
         <Router>
           <div className="App">
             <Routes>
@@ -28,16 +27,16 @@ function App() {
               />
               {isLoggedIn && (
                 <>
-                  <Route path="/main" element={<MainPage />} />
-                  <Route path="/stock" element={<StockPage />}  />
-                  <Route path="/convertExcel" element={<ExeclPage />}  />
-                  <Route path="/suppliers" element={<MainSupp />} />
+                    <Route path="/main" element={<MainPage />} />
+                    <Route path="/stock" element={<StockPage />}  />
+                    <Route path="/convertExcel" element={<ExeclPage />}  />
+                    <Route path="/suppliers" element={<MainSupp />} />
                 </>
               )}
             </Routes>
           </div>
         </Router>
-      </NotificationProvider>
+    </>
   );
 }
 

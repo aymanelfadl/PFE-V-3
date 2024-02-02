@@ -9,35 +9,30 @@ import Divider from '@mui/material/Divider';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import { useNotificationContext } from './NotificationContext';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { set } from 'mongoose';
+import Badge from "@mui/material/Badge";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWarning, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function BoxList({ onLogOut }) {
-  const { notificationCount, increaseNotificationCount } = useNotificationContext();
   const [openDialog, setOpenDialog] = useState(false);
   const [ProductData, setProductData] = useState([]);
+  const [countValue, setCountValue] = useState(0);
 
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/products/productlist');
-        const data = await response.json();
-       setProductData(data);
-      } catch (error) {
-        console.error('Error fetching product data:', error);
-      }
-    };
-
-    fetchProductData();
-  }, []);
+  const fetchProductData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/products/productlist');
+      const data = await response.json();
+      setProductData(data);
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
+  };
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -48,18 +43,37 @@ export default function BoxList({ onLogOut }) {
     setOpenDialog(false);
   };
 
+  const notificationCount = ProductData.reduce((count, product) => {
+    if (product.quantityInStock === 0 || product.quantityInStock < 50) {
+      return count + 1;
+    }
+    return count;
+  }, 0);
+   
+  
+
+  useEffect(() => {
+    setCountValue(notificationCount);
+    fetchProductData();
+  }, [notificationCount]);
+  
+
   return (
     <>
       <Box sx={{ width: '200px', bgcolor: '#cfcfcf', zIndex: '100', borderRadius: '20px', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation() }}>
         <nav aria-label="main mailbox folders">
           <List>
             <ListItem disablePadding >
+              
               <ListItemButton onClick={handleOpenDialog}>
                 <ListItemIcon>
+                <Badge badgeContent={countValue} color="error">
                   <CircleNotificationsIcon style={{ color: 'white' }} />
+                  </Badge>
                 </ListItemIcon>
                 <ListItemText primary={"Inbox"} />
               </ListItemButton>
+              
             </ListItem>
             <ListItem disablePadding onClick={onLogOut}>
               <ListItemButton>
