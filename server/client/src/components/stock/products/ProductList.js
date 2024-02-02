@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTag , faSpinner} from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -45,6 +47,7 @@ const ProductList = () => {
       .catch(error => {
         console.error(error.response.data.error);
       });
+    toast.success("The product has been successfully deleted!");
     setSelectedProduct(null);
     setShowConfirmation(false);
     setIsFullWidth(false);
@@ -203,6 +206,18 @@ const ProductList = () => {
             )}
            </div>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          autoClose={5000}
+        />
     </div>
   );
 };

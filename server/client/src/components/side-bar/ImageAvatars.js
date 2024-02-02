@@ -58,7 +58,7 @@ export default function ImageAvatars() {
         {displayBoxList && 
         <>       
           <Avatar {...stringAvatar(userName)} onClick={onAvatareClick => setDisplayBoxList(!displayBoxList)} />   
-          <div style={{ position: 'absolute', top: '-390%', left: '50%', zIndex: '1000'}}>
+          <div style={{ position: 'absolute', top: '-275%', left: '50%', zIndex: '1000'}}>
             <BoxList onLogOut={LogOut}/>
           </div>
         </>

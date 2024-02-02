@@ -5,3 +5,10 @@
   border: #fff 1px solid;
 
 }
+
+.labelDesign{
+  border: none; 
+  border-radius: 40px;
+  font-family:sans-serif;
+  word-spacing: 4px;
+}

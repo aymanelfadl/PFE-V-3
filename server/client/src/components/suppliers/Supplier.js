@@ -41,7 +41,6 @@ const SuppliersList = () => {
       const data = await response.json();
       console.log('Fetched products:', data);
 
-      // Append the new products to the existing list
       setSupplierProducts((prevProducts) => [...prevProducts, ...data]);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -101,14 +100,14 @@ const SuppliersList = () => {
       ) : error ? (
         <div className="text-danger">{error}</div>
       ) : (
-        <div style={{maxHeight: "400px", overflowY: "auto"}}>
-        <table className='table table-hover shadow-sm p-3 mb-5 bg-body rounded ' >
+        <div className="container" style={{maxHeight: "520px", overflowY: "auto", width:"1000px"}}>
+        <table className='table table-hover shadow p-1 mb-4  bg-body rounded' >
           <thead>
             <tr>
               <th>Name</th>
               <th>Contact info</th>
-              <th>Registration Date</th>
-              <th>Action</th>
+              <th><center>Registration Date</center></th>
+              <th><center>Action</center></th>
             </tr>
           </thead>
           <tbody>
@@ -116,11 +115,13 @@ const SuppliersList = () => {
               <tr key={supplier._id}>
                 <td>{supplier.supplierName}</td>
                 <td>{supplier.supplierContactInfo}</td>
-                <td>{chnageDateFormat(supplier.date)}</td>
+                <td><center>{chnageDateFormat(supplier.date)}</center></td>
                 <td>
-                  <button onClick={() => openModal(supplier)} className='view'>
-                    View Products
-                  </button>
+                  <center>
+                    <button onClick={() => openModal(supplier)} className='view'>
+                         View Products 
+                    </button>
+                  </center>
                 </td>
               </tr>
             ))}

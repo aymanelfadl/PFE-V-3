@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import Badge from "@mui/material/Badge";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWarning, faXmark } from '@fortawesome/free-solid-svg-icons';
+import "./Sidebar.css";
 
 export default function BoxList({ onLogOut }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -84,15 +85,15 @@ export default function BoxList({ onLogOut }) {
         </nav>
         <Divider />
       </Box>
-      <Dialog open={openDialog} onClose={handleCloseDialog} >
-        <DialogTitle ><u>Notification</u></DialogTitle>
+      <Dialog open={openDialog} onClose={handleCloseDialog}  fullWidth="500px">
+        <DialogTitle ><u><b>Notification:</b></u></DialogTitle>
         <DialogContent>
         <DialogContentText>
         {ProductData.map((product) => {
             if (product.quantityInStock === 0) {
               return (
                 <div key={product.id}>
-                  <p>
+                  <p className='border-bottom border-dark-subtle labelDesign p-2'>
                     <FontAwesomeIcon icon={faXmark} className='mx-2' color='red'/>
                     Product <span style={{ color: 'red', fontWeight:"bolder"}}>{product.name}</span> is Out Of Stock.
                   </p>
@@ -100,8 +101,8 @@ export default function BoxList({ onLogOut }) {
               );
             } else if (product.quantityInStock < 50) {
               return (
-                <div key={product.id}>
-                  <p>
+                <div key={product.id} >
+                  <p className='border-bottom border-dark-subtle labelDesign p-2 '>
                    <FontAwesomeIcon icon={faWarning} className='mx-2' color='orange' />
                     Product <span style={{ color: 'orange',  fontWeight:"bolder"}}>{product.name}</span> is Close To End Up.
                   </p>
