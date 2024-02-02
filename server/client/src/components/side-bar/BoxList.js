@@ -8,7 +8,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -64,7 +63,6 @@ export default function BoxList({ onLogOut }) {
         <nav aria-label="main mailbox folders">
           <List>
             <ListItem disablePadding >
-              
               <ListItemButton onClick={handleOpenDialog}>
                 <ListItemIcon>
                 <Badge badgeContent={countValue} color="error">
@@ -73,7 +71,6 @@ export default function BoxList({ onLogOut }) {
                 </ListItemIcon>
                 <ListItemText primary={"Inbox"} />
               </ListItemButton>
-              
             </ListItem>
             <ListItem disablePadding onClick={onLogOut}>
               <ListItemButton>
@@ -81,14 +78,6 @@ export default function BoxList({ onLogOut }) {
                   <MeetingRoomIcon style={{ color: 'white' }} />
                 </ListItemIcon >
                 <ListItemText primary="Log Out" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding >
-              <ListItemButton>
-                <ListItemIcon>
-                  <SupportAgentIcon style={{ color: 'white' }} />
-                </ListItemIcon >
-                <ListItemText primary="Support " />
               </ListItemButton>
             </ListItem>
           </List>

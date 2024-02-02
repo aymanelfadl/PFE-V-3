@@ -2,8 +2,6 @@ import React, { useState} from 'react';
 import axios from 'axios';
 import "./Auth.css";
 
-
-
 const AuthForm = ({ setisLoggedIn}) => {
 
   const [authMode, setAuthMode] = useState('signin');
@@ -43,8 +41,11 @@ const AuthForm = ({ setisLoggedIn}) => {
 
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('userName', response.data.name);
-      setisLoggedIn(true);
 
+      if (authMode === 'signin') {
+        setisLoggedIn(true);
+      }
+      
       setFormData({
         name: '',
         email: '',
