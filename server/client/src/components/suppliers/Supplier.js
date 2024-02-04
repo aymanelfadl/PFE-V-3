@@ -11,6 +11,8 @@ const SuppliersList = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
+  const [sortColumn, setSortColumn] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +66,7 @@ const SuppliersList = () => {
   const filteredSuppliers = uniqueSuppliers.filter((supplier) =>
     supplier.supplierName.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const chnageDateFormat = (e) =>{
+  const changeDateFormat = (e) =>{
     const parsedDate = new Date(e);
     if (isNaN(parsedDate.getTime())) {
      return "Invalid Date";
@@ -77,6 +79,32 @@ const SuppliersList = () => {
     const formattedInputDate = parsedDate.toLocaleString("fr-FR", options);
     return formattedInputDate;
   }  
+
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortColumn(column);
+      setSortOrder('asc');
+    }
+  };
+
+  const sortedSuppliers = [...filteredSuppliers].sort((a, b) => {
+    if (sortColumn) {
+      if (sortOrder === 'asc') {
+        return a[sortColumn].localeCompare(b[sortColumn]);
+      } else {
+        return b[sortColumn].localeCompare(a[sortColumn]);
+      }
+    }
+    return 0;
+  });
+  const getSortIcon = (column) => {
+    if (sortColumn === column) {
+      return sortOrder === 'asc' ? '▲' : '▼';
+    }
+    return null;
+  };
   return (
     <div className="container mt-4">
       <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-4 ml-5 " style={{ marginRight: "250px", marginLeft: "250px" }}>
@@ -101,32 +129,42 @@ const SuppliersList = () => {
         <div className="text-danger">{error}</div>
       ) : (
         <div className="container" style={{maxHeight: "520px", overflowY: "auto", width:"1000px"}}>
-        <table className='table table-hover shadow p-1 mb-4  bg-body rounded' >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Contact info</th>
-              <th><center>Registration Date</center></th>
-              <th><center>Action</center></th>
+        <table className='table table-hover shadow p-1 mb-4 bg-body rounded'>
+        <thead style={{cursor:"pointer"}}>
+          <tr>
+            <th onClick={() => handleSort('supplierName')}>
+              Name {getSortIcon('supplierName')}
+            </th>
+            <th onClick={() => handleSort('supplierContactInfo')}>
+              Contact info {getSortIcon('supplierContactInfo')}
+            </th>
+            <th onClick={() => handleSort('date')}>
+              <center>Registration Date {getSortIcon('date')}</center>
+            </th>
+            <th>
+              <center>Action</center>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedSuppliers.map((supplier) => (
+            <tr key={supplier._id}>
+              <td>{supplier.supplierName}</td>
+              <td>{supplier.supplierContactInfo}</td>
+              <td>
+                <center>{changeDateFormat(supplier.date)}</center>
+              </td>
+              <td>
+                <center>
+                  <button onClick={() => openModal(supplier)} className='view'>
+                    View Products
+                  </button>
+                </center>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {filteredSuppliers.map((supplier) => (
-              <tr key={supplier._id}>
-                <td>{supplier.supplierName}</td>
-                <td>{supplier.supplierContactInfo}</td>
-                <td><center>{chnageDateFormat(supplier.date)}</center></td>
-                <td>
-                  <center>
-                    <button onClick={() => openModal(supplier)} className='view'>
-                         View Products 
-                    </button>
-                  </center>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
         </div>
       )}
 
