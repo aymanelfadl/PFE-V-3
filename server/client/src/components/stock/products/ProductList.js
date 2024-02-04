@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import  ProductModificationDialog from "./ProductModificationDialog";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,7 @@ const ProductList = () => {
   const [isFullWidth, setIsFullWidth] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [openModification, setOpenModification] = useState(false);
 
   const fetchProducts = async () => {
     try {
@@ -119,6 +121,13 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  const openModificationModal = () => {
+    setOpenModification(true);
+  }
+
+  const closeModification = () => {
+    setOpenModification(false);
+  }
 
   return (
     <div className={`container mt-4 ${isFullWidth ? 'w-100' : ''}`}>
@@ -194,7 +203,23 @@ const ProductList = () => {
         <div className={isFullWidth ? 'col-md-6' : ''} id="pr-dt">
           {selectedProduct && <h3 style={{ marginTop: "-44px"}} className="text-center border-bottom border-dark-subtle rounded-pill">Product Details</h3>}
           {selectedProduct && <ProductDetails product={selectedProduct} />}
-          {selectedProduct && <center><button className="btn btn-danger p-2 " style={{ marginLeft: "28px", marginTop: "10px" }} onClick={handleProductDelete}>Delete Product</button></center>}
+          {selectedProduct && 
+           <div className='row'>
+           <div className="col p-2"  style={{ marginLeft: "58px", marginTop: "10px" }}>
+             <ProductModificationDialog showModal={openModification} selectedProduct={selectedProduct} closeModal={closeModification} />
+           </div>
+           <div className="col mr-2">
+             <button
+               className="btn btn-danger "
+               style={{ marginLeft: "28px", marginTop: "18px" }}
+               onClick={handleProductDelete}
+             >
+               Delete The Product 
+             </button>
+           </div>
+         </div>
+          }
+        
           {showConfirmation && (
           <div className="confirmation-modal-overlay">
               <div className="confirmation-modal p-4">
