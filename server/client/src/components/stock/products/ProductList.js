@@ -120,6 +120,16 @@ const ProductList = () => {
     fetchProducts();
   }, []);
   
+  const handleSaveChanges = (updatedProduct) => {
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((product) =>
+        product._id === updatedProduct._id ? updatedProduct : product
+      );
+      return updatedProducts;
+    });
+    setSelectedProduct(updatedProduct);
+  };
+
   return (
     <div className={`container mt-4 ${isFullWidth ? 'w-100' : ''}`}>
       <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-4 ml-5" style={{ marginRight: "250px", marginLeft: "250px" }}>
@@ -197,7 +207,7 @@ const ProductList = () => {
           {selectedProduct && 
            <div className='row'>
            <div className="col p-2"  style={{ marginLeft: "58px", marginTop: "10px" }}>
-             <ProductModificationDialog selectedProduct={selectedProduct}  />
+             <ProductModificationDialog selectedProduct={selectedProduct} onSaveChanges={handleSaveChanges}  />
            </div>
            <div className="col mr-2">
              <button

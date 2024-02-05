@@ -19,7 +19,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const ProductModificationDialog = ({showModal,selectedProduct }) => {
+const ProductModificationDialog = ({showModal,selectedProduct, onSaveChanges }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -72,11 +72,11 @@ const ProductModificationDialog = ({showModal,selectedProduct }) => {
       quantityInStock: quantityInStock,
 
     };
-    
     axios
       .put('http://localhost:5000/api/products/updateproduct', updatedProduct)
       .then((response) => {
         setOpen(false);
+        onSaveChanges(response.data);
       })
       .catch((error) => {
         console.error('Error updating product:', error.response.data.error);
