@@ -19,7 +19,6 @@ const ProductList = () => {
   const [isFullWidth, setIsFullWidth] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [openModification, setOpenModification] = useState(false);
 
   const fetchProducts = async () => {
     try {
@@ -120,15 +119,7 @@ const ProductList = () => {
     setLoading(true);
     fetchProducts();
   }, []);
-
-  const openModificationModal = () => {
-    setOpenModification(true);
-  }
-
-  const closeModification = () => {
-    setOpenModification(false);
-  }
-
+  
   return (
     <div className={`container mt-4 ${isFullWidth ? 'w-100' : ''}`}>
       <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-4 ml-5" style={{ marginRight: "250px", marginLeft: "250px" }}>
@@ -206,7 +197,7 @@ const ProductList = () => {
           {selectedProduct && 
            <div className='row'>
            <div className="col p-2"  style={{ marginLeft: "58px", marginTop: "10px" }}>
-             <ProductModificationDialog showModal={openModification} selectedProduct={selectedProduct} closeModal={closeModification} />
+             <ProductModificationDialog selectedProduct={selectedProduct}  />
            </div>
            <div className="col mr-2">
              <button

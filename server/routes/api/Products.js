@@ -44,6 +44,25 @@ router.post("/deleteproduct", async (req, res) => {
   }
 });
 
+router.put('/updateproduct', async (req, res) => {
+  try {
+    const { _id, ...updatedFields } = req.body;
+
+    const product = await Product.findById(_id);
+
+    Object.keys(updatedFields).forEach(field => {
+      product[field] = updatedFields[field];
+    });
+
+    const updatedProduct = await product.save();
+
+    res.json(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.post('/newproducts', async (req, res) => {
   try {
     const { products } = req.body;
