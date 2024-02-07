@@ -104,24 +104,14 @@ p>.totalE{
     background-color: #DCF2F1;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
 }
-.order:hover{
-    background-color: #DCF2F1;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
-}.earning:hover{
-    background-color: #DCF2F1;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
-}.sales:hover{
-    background-color: #DCF2F1;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
-}
-.Obar >h4{
-    margin-left:55px;
-    margin-top:5px;
+
+.dashClass h4{
     font-family: 'Times New Roman', Times, serif;
     color:#365486;
-
+margin: 0%;
+padding: 0%;
 }
-.Obar >h4:hover{
+.dashClass h4:hover{
     color: #709ae2;
 }
 
@@ -136,14 +126,11 @@ p>.totalE{
 .latestorders{
     border:1px solid #DCF2F1;
     width: auto;
-    margin-top:20px;
-    margin-left:30px;
     box-shadow: 0 4px 6px #DCF2F1;
-     
 }
 #latestOrders{
     width:800px;
-    height:100px;
+    height:10px;
     margin-top:20px;
 }
 #latestO{
@@ -151,8 +138,8 @@ p>.totalE{
 }
 .client{
     border:3px solid #DCF2F1;
-    height:170px;
-    width:160px;
+    height:140px;
+    width:200px;
     margin-left:20px;
     padding-bottom:30px;
     border-radius:10px;
@@ -162,20 +149,18 @@ p>.totalE{
     color:grey;
     font-family: 'Times New Roman', Times, serif;
     font-size: large;
-   margin-top:12px;
+    margin-left: 8px;
 }
 .status{
     border-radius:20px;
-    height:22px;
+    height:20px;
     width:120px;
-    
-    
-    
+    color: #EEF5FF;
+    /* padding-right:20px; */
 }
-#price{
-    margin-top:5px;
-   
-}
+/* #price{
+    margin-top:5px;  
+} */
 .icon{
     margin-right:3px;
     color:black;

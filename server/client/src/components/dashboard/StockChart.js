@@ -59,7 +59,7 @@ const StockChart = () => {
                 title: {
                   display: true,
                   text: 'Stock Level',
-                  fontSize: 16,
+                  fontSize: 8,
                 },
                 datalabels: {
                   formatter: (value, context) => {

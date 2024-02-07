@@ -5,13 +5,24 @@ import { FcSalesPerformance } from "react-icons/fc";
 import StockChart from './StockChart';
 import { Link } from 'react-router-dom';
 import BarChart from './EarningsChart';
+import Map from './map/Map';
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [totalProductsPerSupplier, setTotalProductsPerSupplier] = useState([]); // Initialize as an empty array
-  const [open , setOpen] =useState(false);
+  const [open , setOpen] = useState(false);
+  const [openMap , setOpenMap] = useState(false);
 
+  const handleOrderOpen = () =>{
+    setOpen(!open);
+    setOpenMap(false);
+  }
+
+  const handleOpenMAp = () =>{
+    setOpen(false);
+    setOpenMap(!openMap);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,8 +52,8 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className='dash container'>
-       <section className='row'>
+    <div className='dash container '>
+       <section className='row '>
          <div className='customers col'>
           <p>Customers: <FaUser className='totalC'/> </p>
           <h6>total Customers:  {dashboardData.totalCustomers}</h6> 
@@ -63,41 +74,52 @@ const Dashboard = () => {
         
        </section>
         
-       <div style={{ width: open? "" : "280px" }}>
-  <div className='latestorders'>
-    <div className='Obar' onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
-      <h4>Recent Orders</h4>
+       <div>
+  <div className='latestorders mt-3'>
+    <div className='row' >
+      <div className='col dashClass ' onClick={handleOrderOpen} style={{ cursor: "pointer" }}>
+        <h4 className='text-center p-1 pt-2'>Recent Orders</h4>
+      </div>
+      <div className='col dashClass border-start'  onClick={handleOpenMAp} style={{ cursor: "pointer" }}>
+        <h4 className='text-center p-1 pt-2'>Map Dashboard.</h4>
+      </div>
     </div>
-
+    {openMap && (
+       <div className='container shadow'>
+          <center><Map /></center> 
+        </div>
+    )}
     {open && (
-      <table className='table' id='latestOrders'>
+      <table className='table' id='latestOrders' style={{marginTop:"0%"}}>
         <tbody>
           {dashboardData.latestOrders.map((order, index) => {
             const orderId = index + 1;
             return (
-              <td key={order._id} id='latestO'>
-                <div className='client'>
-                  {orderId}
+              <td key={order._id} id='latestO' >
+                <div className='grid text-center client' style={{rowGap:"0"}}>
+                  <div className='d-flex flex-row mb-3 g-col-6' >
+                  <div className='p-2'>{orderId}</div> 
+                  <div className='p-2'>{order.customerName}</div>
+                  <div className='p-2'>
                   <Link
                     to={`/orderDetails/${order._id}`}
                     onClick={() => handleViewDetails(order._id)}
-                    className='lien'
                   >
-                    <FaEllipsisV style={{ marginLeft: "30px" }} />
+                    <FaEllipsisV style={{ marginLeft: "65px" }} />
                   </Link>
-                  <p>{order.customerName}</p>
-                  <h6 id='price'>Price: {order.totalPrice + " MAD"}</h6>
-                  <center>
+                  </div>
+                  </div>
+                  <div className='g-start-2'>
+                  <h6 style={{marginTop:"-18px"}}>Price: {order.totalPrice + " MAD"}</h6>
                     <div
                       className='status'
                       style={{
                         backgroundColor: order.Status === 'Delivered' ? 'greenyellow' : 'red',
-                        paddingLeft: order.Status === 'Delivered' ? '30px' : '10px',
                       }}
                     >
                       {order.Status}
                     </div>
-                  </center>
+                </div>
                 </div>
               </td>
             );
@@ -107,16 +129,20 @@ const Dashboard = () => {
     )}
   </div>
 </div>
-
-  <div className='row mt-3'>
-        <div className='container shadow mx-4 col'>
+{!openMap &&
+  <div className='container-sm row mt-2'>
+        <div className='container-sm shadow mx-4 col '>
           <BarChart/>
          </div>
-        <div className=' container shadow mx-4 col'>
-          <StockChart/>  
-        </div> 
+        <div className=' container-sm shadow mx-4 col '>
+        <div className='mb-2'>
+          <StockChart/>
+          </div>  
+        </div>
     </div>
+}
     </div>
+  
   );
 };
 
