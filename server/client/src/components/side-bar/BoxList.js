@@ -44,7 +44,7 @@ export default function BoxList({ onLogOut }) {
   };
 
   const notificationCount = ProductData.reduce((count, product) => {
-    if (product.quantityInStock === 0 || product.quantityInStock < 50) {
+    if (product.quantityInStock === 0 || product.quantityInStock < 10) {
       return count + 1;
     }
     return count;
@@ -99,7 +99,7 @@ export default function BoxList({ onLogOut }) {
                   </p>
                 </div>
               );
-            } else if (product.quantityInStock < 50) {
+            } else if (product.quantityInStock < 20) {
               return (
                 <div key={product.id} >
                   <p className='border-bottom border-dark-subtle labelDesign p-2 '>

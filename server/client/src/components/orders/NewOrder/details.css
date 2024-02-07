@@ -1,0 +1,69 @@
+.customer{
+    border:2px solid rgb(67, 111, 255);
+   
+    width:1070px;
+    height:200px;
+    margin-left:20px;
+    margin-top:130px;
+}
+.FaUser{
+    color:  rgb(67, 111, 255);
+    background-color:whitesmoke;
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    margin-right:10px;
+}
+.User{
+ padding-left:50px;
+ padding-top:50px;
+}
+
+.Info{
+    margin-left:350px;
+    position: absolute;
+    top:180px;
+}
+p{
+    margin-top:10px;
+    margin-left:30px;
+    color: black;
+    font-family:'Times New Roman', Times, serif;
+    
+    font-weight:unset;
+}
+.Deliver{
+    margin-left:800px;
+    position: absolute;
+    top:180px;
+}
+#display{
+    width:1070px;
+    margin-left:20px;
+    margin-top:0px;
+}
+#display th{
+    background-color: rgb(67, 111, 255);
+    color: white;
+}
+#display tr{
+  border-color: #89cff0;
+}
+.trash{
+    color: red;
+}
+.link{
+    text-decoration: none;
+    color: white;
+}
+.nag{
+    background-color: rgb(67, 111, 255);
+    border-color: rgb(67, 111, 255);
+    margin-left:30px;
+    position: absolute;
+    top:50px;
+}
+.nag:hover{
+    background-color: #89cff0;
+    border-color: #89cff0;
+}

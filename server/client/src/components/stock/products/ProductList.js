@@ -188,7 +188,7 @@ const ProductList = () => {
                   className={`badge bg-primary text-wrap rounded-start-pill p-3 ${
                     product.quantityInStock === 0
                       ? 'bg-danger'
-                      : product.quantityInStock < 5
+                      : product.quantityInStock < 10
                         ? 'bg-warning'
                         : ''
                   }`}

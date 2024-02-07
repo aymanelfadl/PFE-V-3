@@ -1,0 +1,80 @@
+.main-page{
+    display: flex;
+}
+
+.Eye{
+    border:none;
+    background-color:white;
+    color: blue;
+
+
+}
+.table th{
+    background-color: whitesmoke;
+}
+.orders{
+    color:black;
+    text-decoration: none;
+    font-family: cursive;
+    font-size:100%; 
+    cursor: pointer;
+  
+}
+.orders:hover{
+    color: rgb(67, 111, 255);
+}
+.div1{
+    border-bottom:2px solid rgb(67, 111, 255);
+    width:100px;
+    padding-left:10px;
+    margin-top:60px;
+    margin-bottom:30px;
+}
+.div2{
+    
+    width:150px;
+    padding-left:10px;
+    margin-left:110px;
+    position: absolute;
+    top:131px;
+}
+.add{
+    color:grey;
+    text-decoration: none;
+    font-family: cursive;
+    font-size:100%; 
+    cursor: pointer;
+}
+.add:hover{
+    color:rgb(67, 111, 255);
+}
+.stt{
+    
+    border-radius:60px;
+    width:130px;
+    
+}
+.filter{
+    width:300px;
+    height:30px;
+    margin-bottom:40px;
+}
+#statusFilter{
+  height:35px;
+  border-color: black;
+ 
+}
+.range{
+    position: absolute;
+    margin-left:775px;
+    top:210px;
+    
+
+    
+}
+.range >input{
+    height:35px;
+    width: 200px;
+    
+}
+
