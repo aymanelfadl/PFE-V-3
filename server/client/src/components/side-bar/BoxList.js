@@ -85,7 +85,7 @@ export default function BoxList({ onLogOut }) {
         </nav>
         <Divider />
       </Box>
-      <Dialog open={openDialog} onClose={handleCloseDialog}  fullWidth="500px">
+      <Dialog open={openDialog} onClose={handleCloseDialog} onClick={(e)=>{e.stopPropagation()}}  fullWidth="500px">
         <DialogTitle ><u><b>Notification:</b></u></DialogTitle>
         <DialogContent>
         <DialogContentText>
