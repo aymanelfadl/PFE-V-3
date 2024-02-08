@@ -89,4 +89,23 @@ router.get("/productsBySupplier/:supplierName", (req, res) => {
     .catch((err) => res.status(500).json({ error: "Internal Server Error" }));
 });
 
+
+router.post('/getProductsByIds', async (req, res) => {
+  const { productIds } = req.body;
+
+  try {
+    if (!Array.isArray(productIds) || !productIds.every(mongoose.Types.ObjectId.isValid)) {
+      return res.status(400).json({ error: 'Invalid product IDs.' });
+    }
+
+    const products = await Product.find({ _id: { $in: productIds } });
+
+    res.status(200).json({ products });
+  } catch (error) {
+    console.error('Error fetching products by IDs:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 module.exports = router;

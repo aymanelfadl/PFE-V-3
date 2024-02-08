@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './dashboard.css';
 import { FaUser, FaCartArrowDown,FaMoneyCheckAlt, FaEllipsisV, FaBars } from 'react-icons/fa';
+import { Modal, Button, Card } from 'react-bootstrap';
 import { FcSalesPerformance } from "react-icons/fc";
 import StockChart from './StockChart';
 import { Link } from 'react-router-dom';
@@ -89,44 +90,44 @@ const Dashboard = () => {
           <center><Map /></center> 
         </div>
     )}
-    {open && (
-      <table className='table' id='latestOrders' style={{marginTop:"0%"}}>
-        <tbody>
-          {dashboardData.latestOrders.map((order, index) => {
-            const orderId = index + 1;
-            return (
-              <td key={order._id} id='latestO' >
-                <div className='grid text-center client' style={{rowGap:"0"}}>
-                  <div className='d-flex flex-row mb-3 g-col-6' >
-                  <div className='p-2'>{orderId}</div> 
-                  <div className='p-2'>{order.customerName}</div>
-                  <div className='p-2'>
-                  <Link
-                    to={`/orderDetails/${order._id}`}
-                    onClick={() => handleViewDetails(order._id)}
-                  >
-                    <FaEllipsisV style={{ marginLeft: "65px" }} />
+   {open && (
+  <Modal show={open} onHide={() => setOpen(!open)}>
+    <Modal.Header closeButton>
+      <Modal.Title>Latest Orders</Modal.Title>
+    </Modal.Header>
+    <Modal.Body style={{ overflowY: 'auto', maxHeight:"440px",overflowX:"hidden"}}>
+      {dashboardData.latestOrders.map((order, index) => {
+        const orderId = `#${index + 1}`;
+        return (
+          <div className='card mx-5 my-2 shadow-sm' style={{ width: "24rem" }} key={order._id}>
+            <div className='card-body'>
+              <div className='d-flex'>
+                <div className='p-1 flex-grow-1'>
+                  {orderId}
+                </div>
+                <div className='p-1'>
+                  <Link to={`/orderDetails/${order._id}`} onClick={() => handleViewDetails(order._id)}>
+                    <FaEllipsisV />
                   </Link>
-                  </div>
-                  </div>
-                  <div className='g-start-2'>
-                  <h6 style={{marginTop:"-18px"}}>Price: {order.totalPrice + " MAD"}</h6>
-                    <div
-                      className='status'
-                      style={{
-                        backgroundColor: order.Status === 'Delivered' ? 'greenyellow' : 'red',
-                      }}
-                    >
-                      {order.Status}
-                    </div>
                 </div>
-                </div>
-              </td>
-            );
-          })}
-        </tbody>
-      </table>
-    )}
+              </div>
+              <h2 className='card-title'>{order.customerName}</h2>
+              <h4 className='card-subtitle mb-2 text-body-secondary'>Price : {order.totalPrice} MAD</h4>
+              <div className='status card-text d-flex justify-content-center mx-5' style={{ backgroundColor: order.status === 'Delivered' ? 'greenyellow' : 'red' }}>
+                {order.status}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() => setOpen(false)}>
+        Close
+      </Button>
+    </Modal.Footer>
+  </Modal>
+)}
   </div>
 </div>
 {!openMap &&

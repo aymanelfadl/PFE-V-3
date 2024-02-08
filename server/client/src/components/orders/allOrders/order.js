@@ -3,6 +3,18 @@ import { FaEye  } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './order.css';
 
+
+function extractDateFromTimestamp(timestamp) {
+  const dateObject = new Date(timestamp);
+  const year = dateObject.getUTCFullYear();
+  const month = dateObject.getUTCMonth() + 1; // Months are zero-based
+  const day = dateObject.getUTCDate();
+
+  // Create a string in the 'YYYY-MM-DD' format
+  const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+
+  return formattedDate;
+}
 const CustomerOrdersList = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -111,28 +123,8 @@ const handleViewDetails = (orderId) => {
       
       <div className='div1'><Link to="/AllOrders"  exact={true}   className='orders'>All Orders</Link></div> 
      <div className='div2'><Link to="/placeOrder" exact={true}  className='add'> New Order</Link></div> 
-    <div className='huh'>
-       <div className="range">
-        <label htmlFor="startDate"></label>
-        <input
-        style={{paddingLeft:'30px' , marginRight:'5px'}}
-          type="date"
-          id="startDate"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-
-        <label htmlFor="endDate"> To</label>
-        <input
-        style={{paddingLeft:'30px' , marginLeft:'5px'}}
-          type="date"
-          id="endDate"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
-
-  <div className='filter'>
+     <div className="d-flex">
+      <div className='p-2 flex-grow-1'>
 
         <label htmlFor="statusFilter" className="form-label"> Filter by Status:</label>
         <select
@@ -147,9 +139,25 @@ const handleViewDetails = (orderId) => {
          
         </select>
       </div>
-    </div>
-    
-
+       <div   className='p-2 mt-4'>
+        <label htmlFor="startDate" className='p-2'> <b> FROM </b></label>
+        <input
+          type="date"
+          id="startDate"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        </div>
+        <div className='p-2 mt-4'>
+        <label htmlFor="endDate" className='p-2'> <b> To </b> </label>
+        <input
+          type="date"
+          id="endDate"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        </div>
+        </div>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
@@ -171,18 +179,16 @@ const handleViewDetails = (orderId) => {
           </thead>
           <tbody>
           {filteredOrders.map((order) => {
-            // Update status based on delivery date
             updateStatusBasedOnDeliveryDate(order);
-
             return (
               <tr key={order._id}>
                 <td>{order.customerName}</td>
-                <td>{order.delivereyDate}</td>
+                <td>{extractDateFromTimestamp(order.delivereyDate)}</td>
                 <td>{order.totalQuantity}</td>
-                <td>${order.totalPrice}</td>
+                <td>{order.totalPrice} MAD</td>
                 <td >
-                  <div className='stt' style={{ backgroundColor: order.Status === 'Delivered' ? 'greenyellow' : 'red' , paddingLeft: order.Status === 'Delivered' ? '30px' : '20px' }} >
-                     {order.Status}
+                  <div className='stt' style={{ backgroundColor: order.status === 'Delivered' ? 'greenyellow' : 'red' , paddingLeft: order.status === 'Delivered' ? '30px' : '20px' }} >
+                     {order.status}
                   </div>
                  
                 </td>

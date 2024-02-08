@@ -153,10 +153,10 @@ padding: 0%;
 }
 .status{
     border-radius:20px;
-    height:20px;
-    width:120px;
+    height:16px;
+    width:200px;
     color: #EEF5FF;
-    /* padding-right:20px; */
+    padding: 12px;
 }
 /* #price{
     margin-top:5px;  

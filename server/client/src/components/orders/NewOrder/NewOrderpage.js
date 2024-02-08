@@ -27,15 +27,8 @@ const NewOrderPage = () => {
   const handlePlaceOrder = async (orderData) => {
     console.log('Order Data:', orderData); 
     console.log('Deliverey Date:', orderData.delivereyDate);
-  console.log('Code Postal:', orderData.codePostal);
-
+    console.log(orderData);
     try {
-      if (!orderData.delivereyDate || !orderData.codePostal) {
-        console.error('Please provide deliveryDate and CodePostal');
-        // Optionally, you can display an error message to the user
-        return;
-      }
-
       const response = await fetch('http://localhost:5000/api/orders/placeOrder', {
         method: 'POST',
         headers: {
@@ -62,8 +55,12 @@ const NewOrderPage = () => {
 
   return (
     <div>
-            <div className='div1'><Link to="/allOrders" exact={true}  className='orders' style={{fontFamily:'sans-serif' , fontWeight:'bold' , color:'black' }}>BACK</Link></div>
-      <NewOrderForm products={products} onSubmit={handlePlaceOrder} />
+            <div className='position-relative'>
+              <div className='position-absolute top-0 start-0 mt-2 mx-5'>
+                <Link to="/allOrders" exact={true}  className='btn btn-primary w-100 px-3 mb-2'>BACK</Link>
+              </div>
+            </div>
+             <NewOrderForm products={products} onSubmit={handlePlaceOrder} />
 
       <ToastContainer
   position="top-center"
