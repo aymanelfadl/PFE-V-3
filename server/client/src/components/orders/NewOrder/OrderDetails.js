@@ -110,7 +110,7 @@ const OrderDetails = () => {
                      {orderDetails.totalQuantity}
                       </td>
                      <td>{orderDetails.totalPrice} MAD</td>
-                     <td> <FaTrash  className='trash'   onClick={handleDeleteOrder} />  
+                     <td > <FaTrash  style={{cursor:"pointer"}} className='trash'   onClick={handleDeleteOrder} />  
                     </td>
                     </tr>
                  

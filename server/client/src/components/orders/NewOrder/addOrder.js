@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import './AddOrder.css';
-import { FaTimes } from 'react-icons/fa';
+
 
 const regionsData = {
-  'Tanger-Tetouan-Al Hoceima Region': ['Al Hoceima', 'Chefchaouen', 'Anjra', 'Larache', 'M\'diq', 'Ouazzane', 'Tangier', 'Tétouan'],
-  'Souss-Massa Region': ['Agadir', 'Biougra', 'Inezgane', 'Taroudant', 'Tata', 'Tiznit'],
-  'Rabat-Salé-Kénitra Region': ['Kenitra', 'Khemisset', 'Rabat', 'Salé', 'Sidi Kacem', 'Sidi Slimane', 'Temara'],
-  'Oriental Region': ['Berkane', 'Driouch', 'Figuig', 'Guercif', 'Jerada', 'Nador', 'Oujda', 'Taourirt'],
-  'Marrakesh-Safi Region': ['Tahannaout', 'Chichaoua', 'Kalaat Sraghna', 'Essaouira', 'Marrakesh', 'Ben Guerir', 'Safi', 'Youssoufia'],
-  'Laâyoune-Sakia El Hamra Region': ['Boujdour', 'Smara', 'Laayoune', 'Tarfaya'],
-  'Guelmim-Oued Noun Region': ['Assa', 'Guelmim', 'Sidi Ifni', 'Tan-Tan'],
-  'Fès-Meknès Region': ['Boulemane', 'El Hajeb', 'Fez', 'Ifrane', 'Meknes', 'Moulay Yacoub', 'Sefrou', 'Taounate', 'Taza'],
-  'Drâa-Tafilalet Region': ['Errachidia', 'Midelt', 'Ouarzazate', 'Tinghir', 'Zagora'],
-  'Dakhla-Oued Ed-Dahab Region': ['Aousserd', 'Dakhla'],
-  'Casablanca-Settat Region': ['Benslimane', 'Berrechid', 'Casablanca', 'El Jadida', 'Mediouna', 'Mohammedia', 'Nouaceur', 'Settat', 'Sidi Bennour'],
-  'Béni Mellal-Khénifra Region': ['Azilal', 'Beni Mellal', 'Fquih Ben Salah', 'Khenifra', 'Khouribga'],
+  'Tanger-Tetouan-Al Hoceima': ['Al Hoceima', 'Chefchaouen', 'Anjra', 'Larache', 'Md iq', 'Ouazzane', 'Tangier', 'Tetouan'],
+  'L Oriental': ['Berkane', 'Driouch', 'Figuig', 'Guercif', 'Jerada', 'Nador', 'Oujda', 'Taourirt'],
+  'Draa-Tafilalet': ['Errachidia', 'Midelt', 'Ouarzazate', 'Tinghir', 'Zagora'],
+  'Souss-Massa': ['Agadir', 'Biougra', 'Inezgane', 'Taroudant', 'Tata', 'Tiznit'],
+  'Guelmim-Oued Noun': ['Assa', 'Guelmim', 'Sidi Ifni', 'Tan-Tan'],
+  'Casablanca-Settat': ['Benslimane', 'Berrechid', 'Casablanca', 'El Jadida', 'Mediouna', 'Mohammedia', 'Nouaceur', 'Settat', 'Sidi Bennour'],
+  'Marrakech-Safi': ['Tahannaout', 'Chichaoua', 'Kalaat Sraghna', 'Essaouira', 'Marrakesh', 'Ben Guerir', 'Safi', 'Youssoufia'],
+  'Laayoune-Sakia El Hamra': ['Boujdour', 'Smara', 'Laayoune', 'Tarfaya'],
+  'Dakhla-Oued Ed-Dahab': ['Aousserd', 'Dakhla'],
+  'Rabat-Sale-Kenitra': ['Kenitra', 'Khemisset', 'Rabat', 'Sale', 'Sidi Kacem', 'Sidi Slimane', 'Temara'],
+  'Fes-Meknes': ['Boulemane', 'El Hajeb', 'Fez', 'Ifrane', 'Meknes', 'Moulay Yacoub', 'Sefrou', 'Taounate', 'Taza'],
+  'Beni Mellal-Khenifra': ['Azilal', 'Beni Mellal', 'Fquih Ben Salah', 'Khenifra', 'Khouribga'],
 };
+
+
 
 const NewOrderForm = ({ products, onSubmit }) => {
   const [customerName, setCustomerName] = useState('');

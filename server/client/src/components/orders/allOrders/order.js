@@ -163,8 +163,8 @@ const handleViewDetails = (orderId) => {
       ) : error ? (
         <div className="text-danger">{error}</div>
       ) : (
-      
-        <table className='table table-hover shadow p-1 mb-4 bg-body rounded'>
+        <div style={{ maxHeight: "350px", overflowY: "auto" }}>
+       <table className='table table-hover shadow p-1 mb-4 bg-body rounded'>
           <thead> 
       
             <tr>
@@ -206,10 +206,10 @@ const handleViewDetails = (orderId) => {
           })}
           </tbody>
         </table>
+        </div>
       )}
 
-   
-    </div>
+   </div>
   );
 };
 

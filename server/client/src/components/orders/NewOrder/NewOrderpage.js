@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const NewOrderPage = () => {
-  const [products, setProducts] = useState([]); // Fetch products from the server
+  const [products, setProducts] = useState([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,8 +25,6 @@ const NewOrderPage = () => {
   }, []);
 
   const handlePlaceOrder = async (orderData) => {
-    console.log('Order Data:', orderData); 
-    console.log('Deliverey Date:', orderData.delivereyDate);
     console.log(orderData);
     try {
       const response = await fetch('http://localhost:5000/api/orders/placeOrder', {

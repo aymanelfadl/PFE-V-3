@@ -11,6 +11,7 @@ router.get('/dashboardData', async (req, res) => {
     const sales = await calculateSales();
     const totalOrders = await Order.countDocuments();
     const totalCustomers = await getTotalCustomers();
+    const customerNames  = await getCustomerNamesFromOrders();
     const stockGraphData = await getStockGraphData();
     const latestOrders = await Order.find().sort({ date: -1 }).limit(5);
     const latestSupplier = await getLatestSupplier();
@@ -26,6 +27,7 @@ router.get('/dashboardData', async (req, res) => {
       latestOrders,
       latestSupplier,
       salesPerCategory, 
+      customerNames,
     });
 
     // Return the dashboard data as a JSON response
@@ -37,7 +39,8 @@ router.get('/dashboardData', async (req, res) => {
       stockGraphData,
       latestOrders,
       latestSupplier,
-      salesPerCategory, 
+      salesPerCategory,
+      customerNames, 
     });
 
   } catch (error) {
@@ -45,7 +48,20 @@ router.get('/dashboardData', async (req, res) => {
     res.status(500).json({ error: `Internal Server Error: ${error.message}` });
   }
 });
-
+async function getCustomerNamesFromOrders() {
+  try {
+    const orders = await Order.find({}, 'customerName customerAddress');
+    const customerData = orders.map(order => ({
+      name: order.customerName,
+      address: order.customerAddress,
+    }));
+    console.log('Customer Data:', customerData);
+    return customerData;
+  } catch (error) {
+    console.error('Error fetching customer data:', error);
+    throw error;
+  }
+}
 // Function to get the total number of unique customers
 async function getTotalCustomers() {
   try {
