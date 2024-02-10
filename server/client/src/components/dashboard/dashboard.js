@@ -7,7 +7,18 @@ import StockChart from './StockChart';
 import { Link } from 'react-router-dom';
 import BarChart from './EarningsChart';
 import Map from './map/Map';
-import { index } from 'd3';
+
+function extractDateFromTimestamp(timestamp) {
+  const dateObject = new Date(timestamp);
+  const year = dateObject.getUTCFullYear();
+  const month = dateObject.getUTCMonth() + 1; 
+  const day = dateObject.getUTCDate();
+
+  const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+
+  return formattedDate;
+}
+
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -56,7 +67,7 @@ const Dashboard = () => {
   return (
     <div className='dash container '>
        <section className='row '>
-         <div className='customers col' onClick={()=>{setOpenCustomers(!openCustomers)}}>
+         <div className='customers col' onClick={()=>{setOpenCustomers(!openCustomers)}} style={{cursor:"pointer"}}>
           <p>Customers: <FaUser className='totalC'/> </p>
           <h6>total Customers:  {dashboardData.totalCustomers}</h6> 
           {openCustomers && 
@@ -64,7 +75,7 @@ const Dashboard = () => {
               <Modal.Header>
               <Modal.Title>Customers :</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
+              <Modal.Body style={{maxHeight:"400px", overflowY:"auto"}}>
               {dashboardData.customerNames.map((customer, index) => (
                   <div key={index} className='container text-cente'>
                     <div className='row align-items-start'>
@@ -86,8 +97,10 @@ const Dashboard = () => {
           }
          </div>
           <div className='customers col'>
-            <p>Orders: <FaCartArrowDown className='totalC'/> </p>
-            <h6> Total Orders: {dashboardData.totalOrders}</h6> 
+          <Link to="/AllOrders" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <p style={{color:"grey" , fontFamily:"Times New Roman" , fontSize:"large"}}>Orders: <FaCartArrowDown className='totalC'/> </p>
+            <h6 style={{ marginLeft:"20px"}}> Total Orders: {dashboardData.totalOrders}</h6> 
+          </Link>
           </div>
           <div className='customers col'>
             <p>Sales: <FaMoneyCheckAlt  className='totalC'/></p>
@@ -123,7 +136,7 @@ const Dashboard = () => {
     </Modal.Header>
     <Modal.Body style={{ overflowY: 'auto', maxHeight:"440px",overflowX:"hidden"}}>
     {dashboardData.latestOrders.slice(-5).map((order, index) => {
-  const orderId = `#${index + 1}`;
+  const orderId = `${index + 1}`;
   return (
     <div className='card mx-5 my-2 shadow-sm' style={{ width: "24rem" }} key={order._id}>
       <div className='card-body'>
@@ -139,8 +152,13 @@ const Dashboard = () => {
         </div>
         <h2 className='card-title'>{order.customerName}</h2>
         <h4 className='card-subtitle mb-2 text-body-secondary'>Price : {order.totalPrice} MAD</h4>
-        <div className='status card-text d-flex justify-content-center mx-5' style={{ backgroundColor: order.status === 'Delivered' ? 'greenyellow' : 'red' }}>
-          {order.status}
+        <div className='d-flex '>
+          <div className='p-2 flex-fill'>
+          Deliverey Date:<br/>{extractDateFromTimestamp(order.delivereyDate)}
+             </div>
+          <div className='p-2 flex-fill status card-text d-flex justify-content-center mt-4'  style={{ backgroundColor: order.status === 'Delivered' ? 'greenyellow' : 'red' }}>
+              {order.status}
+          </div>
         </div>
       </div>
     </div>
