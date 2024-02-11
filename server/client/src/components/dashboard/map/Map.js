@@ -79,13 +79,13 @@ const Map = () => {
       .text((d) => d.properties['name:en']);
 
       function getColorBasedOnOrderCount(orderCount) {
-        const darkGreen = 'darkgreen';
+        const red = 'red';
         const mediumDarkGreen = '#006400'; 
         const mediumLightGreen = '#00AA00'; 
         const lightGreen = 'lightgreen';
       
         if (orderCount > 50) {
-          return darkGreen;
+          return red;
         } else if (orderCount > 30) {
           return mediumDarkGreen;
         } else if (orderCount >15 ) {
@@ -122,7 +122,7 @@ const Map = () => {
     <div className="position-absolute bottom-0 end-0 mb-5 ml-5" style={{marginRight:"140px" , padding:"20px"}}>
    <ul style={{ listStyle: "none", padding: 0 }}>
   <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-    <span className="color-square" style={{ backgroundColor: 'darkgreen', width: '20px', height: '20px', marginRight: '8px' }}></span>
+    <span className="color-square" style={{ backgroundColor: 'red', width: '20px', height: '20px', marginRight: '8px' }}></span>
     More than 50 orders
   </li>
   <li style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>

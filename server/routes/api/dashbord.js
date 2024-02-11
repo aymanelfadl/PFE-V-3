@@ -213,6 +213,27 @@ router.get('/totalProductsPerSupplier', async (req, res) => {
   }
 });
 
+router.get('/ordersByDate', async (req, res) => {
+  try {
+    const ordersByDate = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+          totalOrders: { $sum: 1 },
+        },
+      },
+    ]);
+
+    console.log('Orders by Date:', ordersByDate); // Log the data
+
+    res.json(ordersByDate);
+  } catch (error) {
+    console.error('Error fetching orders by date:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Function to get total quantity of products for each supplier
 async function getTotalProductsPerSupplier() {
   try {

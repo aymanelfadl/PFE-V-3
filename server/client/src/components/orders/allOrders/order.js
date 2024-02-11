@@ -75,13 +75,13 @@ useEffect(() => {
 
     // Filter by status
     if (selectedStatus !== 'All') {
-      filtered = filtered.filter((order) => order.Status === selectedStatus);
+      filtered = filtered.filter((order) => order.status === selectedStatus);
     }
 
     // Filter by date range
     if (startDate && endDate) {
       filtered = filtered.filter((order) => {
-        const orderDate = new Date(order.delivereyDate).getTime();
+        const orderDate = new Date(order.date).getTime();
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
 
@@ -96,9 +96,6 @@ useEffect(() => {
 }, [allOrders, searchTerm, selectedStatus, startDate, endDate]);
 
 const handleViewDetails = (orderId) => {
-  // You can navigate to the new page using the Link component
-  // You can replace '/order-details' with the actual path of your order details page
-  // and pass the orderId as a parameter
   setSelectedOrder(orderId);
 };
  
@@ -139,7 +136,8 @@ const handleViewDetails = (orderId) => {
          
         </select>
       </div>
-       <div   className='p-2 mt-4'>
+      <label className="form-label" style={{marginTop:"8px",padding:"8px"}}> Filter by Date:</label>
+       <div   className='p-2 mt-4'> 
         <label htmlFor="startDate" className='p-2'> <b> FROM </b></label>
         <input
           type="date"
@@ -170,6 +168,7 @@ const handleViewDetails = (orderId) => {
             <tr>
        
               <th>Customer Name</th>
+              <th>Order Date</th>
               <th>Delivery Date</th>
               <th>Quantity</th>
               <th>Total Price</th>
@@ -183,9 +182,10 @@ const handleViewDetails = (orderId) => {
             return (
               <tr key={order._id}>
                 <td>{order.customerName}</td>
+                <td>{extractDateFromTimestamp(order.date)}</td>
                 <td>{extractDateFromTimestamp(order.delivereyDate)}</td>
                 <td>{order.totalQuantity}</td>
-                <td>{order.totalPrice} MAD</td>
+                <td>{order.totalPrice.toFixed(2)} MAD</td>
                 <td >
                   <div className='stt' style={{ backgroundColor: order.status === 'Delivered' ? 'greenyellow' : 'red' , paddingLeft: order.status === 'Delivered' ? '30px' : '20px' }} >
                      {order.status}

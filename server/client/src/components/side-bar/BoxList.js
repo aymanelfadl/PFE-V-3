@@ -99,7 +99,7 @@ export default function BoxList({ onLogOut }) {
                   </p>
                 </div>
               );
-            } else if (product.quantityInStock < 20) {
+            } else if (product.quantityInStock < 10) {
               return (
                 <div key={product.id} >
                   <p className='border-bottom border-dark-subtle labelDesign p-2 '>

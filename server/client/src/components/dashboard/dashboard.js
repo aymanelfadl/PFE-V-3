@@ -5,8 +5,8 @@ import { Modal, Button } from 'react-bootstrap';
 import { FcSalesPerformance } from "react-icons/fc";
 import StockChart from './StockChart';
 import { Link } from 'react-router-dom';
-import BarChart from './EarningsChart';
 import Map from './map/Map';
+import OrderByDateChart from './OrderByDateChart';
 
 function extractDateFromTimestamp(timestamp) {
   const dateObject = new Date(timestamp);
@@ -21,6 +21,7 @@ function extractDateFromTimestamp(timestamp) {
 
 
 const Dashboard = () => {
+  const displayedNames = new Set();
   const [dashboardData, setDashboardData] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [openCustomers, setOpenCustomers] = useState(false);
@@ -60,7 +61,7 @@ const Dashboard = () => {
     setSelectedOrder(orderId);
   };
    
-
+  
   if (!dashboardData) {
     return <div>Loading...</div>;
   }
@@ -75,20 +76,28 @@ const Dashboard = () => {
               <Modal.Header>
               <Modal.Title>Customers :</Modal.Title>
               </Modal.Header>
-              <Modal.Body style={{maxHeight:"400px", overflowY:"auto"}}>
-              {dashboardData.customerNames.map((customer, index) => (
-                  <div key={index} className='container text-cente'>
-                    <div className='row align-items-start'>
-                      <div className="col border-bottom">
-                        <p>{customer.name}</p>
-                      </div>
-                      <div className="col mx-2"><p>From</p></div>
-                      <div className="col border-bottom">
-                        <p>{customer.address}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <Modal.Body style={{maxHeight:"400px", overflowY:"auto"}}>
+                  {dashboardData.customerNames.map((customer, index) => {
+                    if (!displayedNames.has(customer.name)) {
+                      displayedNames.add(customer.name);
+                      return (
+                        <div key={index} className='container text-center'>
+                          <div className='row align-items-start'>
+                            <div className="col border-bottom">
+                              <p>{customer.name}</p>
+                            </div>
+                            <div className="col mx-2"><p>From</p></div>
+                            <div className="col border-bottom">
+                              <p>{customer.address}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return null; // Skip rendering for duplicate names
+                    }
+                  })}
+
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={() => setOpenCustomers(false)}>Close</Button>
@@ -151,7 +160,7 @@ const Dashboard = () => {
           </div>
         </div>
         <h2 className='card-title'>{order.customerName}</h2>
-        <h4 className='card-subtitle mb-2 text-body-secondary'>Price : {order.totalPrice} MAD</h4>
+        <h4 className='card-subtitle mb-2 text-body-secondary'>Price : {order.totalPrice.toFixed(2)} MAD</h4>
         <div className='d-flex '>
           <div className='p-2 flex-fill'>
           Deliverey Date:<br/>{extractDateFromTimestamp(order.delivereyDate)}
@@ -178,7 +187,7 @@ const Dashboard = () => {
 {!openMap &&
   <div className='container-sm row mt-2'>
         <div className='container-sm shadow mx-4 col '>
-          <BarChart/>
+            <div style={{marginTop:"40px"}}><OrderByDateChart/></div>
          </div>
         <div className=' container-sm shadow mx-4 col '>
         <div className='mb-2'>
