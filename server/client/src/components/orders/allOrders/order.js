@@ -48,19 +48,37 @@ const CustomerOrdersList = () => {
   }, []);
 
 
-// Function to check if the delivery date is the current day or in the past
 const isDeliveryDelivered = (deliveryDate) => {
   const formattedToday = new Date().toISOString().split('T')[0];
   return formattedToday >= deliveryDate.split('T')[0];
 };
 
-// Update the status automatically based on delivery date
-const updateStatusBasedOnDeliveryDate = (order) => {
-  if (isDeliveryDelivered(order.delivereyDate)) {
-    // If delivery date is today or in the past, update the status to 'Delivered'
-    order.Status = 'Delivered';
+const updateStatusBasedOnDeliveryDate = async (order) => {
+  if (order && order.delivereyDate && isDeliveryDelivered(order.delivereyDate)) {
+    const orderId = order._id;
+    const newStatus = 'Delivered';
+
+    try {
+      const response = await fetch('http://localhost:5000/api/orders/updateStatus', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderId, newStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log('Order status updated successfully.');
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
   }
 };
+
+
 
 
 useEffect(() => {
@@ -91,7 +109,7 @@ useEffect(() => {
 
     setFilteredOrders(filtered);
   };
-
+  updateStatusBasedOnDeliveryDate();
   filterOrders();
 }, [allOrders, searchTerm, selectedStatus, startDate, endDate]);
 

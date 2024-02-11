@@ -94,7 +94,7 @@ const Dashboard = () => {
                         </div>
                       );
                     } else {
-                      return null; // Skip rendering for duplicate names
+                      return null;
                     }
                   })}
 
@@ -118,7 +118,7 @@ const Dashboard = () => {
          
           <div className='customers col'>
              <p>Earnings  <FcSalesPerformance className='totalC' /> </p>
-           <h6>Total Earnings : {dashboardData.earnings} MAD</h6>  
+           <h6 style={{marginLeft:"10px"}}>{dashboardData.earnings.toFixed(2)} MAD</h6>  
           </div>
         
        </section>

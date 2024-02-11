@@ -143,6 +143,16 @@ router.delete('/deleteOrder/:orderId', async (req, res) => {
 });
 
 
+router.put('/updateStatus', async (req, res) => {
+  const { orderId, newStatus } = req.body;
 
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(orderId, { status: newStatus }, { new: true });
+    res.json(updatedOrder);
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

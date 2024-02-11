@@ -101,7 +101,7 @@ async function calculateEarnings() {
     const totalEarningsResult = await Order.aggregate([
       {
         $match: {
-          Status:'Delivered',
+          status:'Delivered',
         },
       },
       {
