@@ -35,7 +35,6 @@ function App() {
                     <Route path="/stock" element={<StockPage />}  />
                     <Route path="/convertExcel" element={<ExeclPage />}  />
                     <Route path="/suppliers" element={<MainSupp />} />
-                    <Route path="/stock" element={<StockPage />}  />
                     <Route path='/allOrders' element={<MainOrder /> } />
                     <Route path='/productsBySupplier' element={<MainSupp /> } />
                     <Route path='/placeOrder' element={<NewOrder/>} />
